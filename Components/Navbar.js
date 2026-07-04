@@ -26,7 +26,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     }
 
     return (
-        <div className='flex justify-between py-3 items-center lg:flex-row shadow'>
+        <div className='flex justify-between py-3 items-center lg:flex-row shadow sticky top-0 z-20 bg-white'>
             <div className="logo mx-2">
                 <Link href={'/'} className='cursor-pointer'>
                     <Image width={90} height={90} src={'/Logo.png'} alt='HeroImage'></Image>
@@ -52,7 +52,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             </div>
 
             {/* Humburger Side Menu  */}
-            <div className={`z-20 absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
+            <div className={`z-30 h-screen absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
                 <div className='flex flex-col text-gray-600'>
 
                     <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 cursor-pointer'>
@@ -71,7 +71,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
 
             {/* Side Cart  */}
-            <div ref={ref} className="cart absolute top-0 right-0  bg-[#E5B25D] py-10 px-8 text-blue-950 shadow-xl transform transition-transform translate-x-full z-10 h-full text-xl lg:text-lg prata-regular">
+            <div ref={ref} className="cart absolute top-0 right-0  bg-[#E5B25D] py-10 px-8 text-blue-950 shadow-xl transform transition-transform translate-x-full h-screen text-xl lg:text-lg prata-regular">
 
                 <h2 className='font-bold text-3xl relative -top-1.5 text-center'>Shopping Cart</h2>
                 <span onClick={handleSideCart} className='absolute right-3 top-2 text-2xl cursor-pointer'><MdCancel /></span>
@@ -111,7 +111,10 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
                 {/* Checkout & ClearCart  */}
                 <div className="flex">
-                    <button className="flex items-center gap-2 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md w-full cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag /></button>
+                    <Link href={'/checkout'} className='mr-3'>
+                        <button className="flex items-center gap-2 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md w-full cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
+                        </button>
+                    </Link>
 
                     <button onClick={() => clearCart()} className="flex items-center gap-2 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded text-md w-full cursor-pointer transform transition-transform duration-100 hover:scale-110">ClearCart <FaTrashAlt /></button>
                 </div>

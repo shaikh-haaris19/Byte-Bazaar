@@ -5,7 +5,7 @@ import Image from 'next/image'
 const Footer = () => {
     return (
         <div>
-            <footer className="text-gray-600 body-font">
+            <footer className="text-gray-600 body-font sticky bottom-0 bg-white">
                 <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
                     <Link href={'/'} className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
                         <Image width={60} height={80} className="text-white p-2" src="/Logo.png" alt="" />
