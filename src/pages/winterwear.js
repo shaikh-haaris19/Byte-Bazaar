@@ -6,7 +6,7 @@ const winterwear = () => {
         <div>
             <section className="text-gray-600 body-font">
                 <div className="container px-5 py-24 mx-auto">
-                    <div className="flex flex-wrap -m-4">
+                    <div className="flex flex-wrap -m-4 justify-center">
                         <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
                             <Link href={'/product/Puffer Winter Jacket For Men'} className="block relative rounded overflow-hidden cursor-pointer">
                                 <img alt="ecommerce" className="h-[40vh] md:h-[36vh] block m-auto" src="https://m.media-amazon.com/images/I/61j2FBMg2LL._AC_SX416_CB1169409_QL70_.jpg" />
