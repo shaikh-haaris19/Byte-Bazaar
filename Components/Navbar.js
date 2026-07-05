@@ -26,6 +26,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     }
 
     return (
+
         <div className='flex justify-between py-3 items-center lg:flex-row shadow sticky top-0 z-20 bg-white'>
             <div className="logo mx-2">
                 <Link href={'/'} className='cursor-pointer'>
@@ -40,6 +41,8 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                     <Link href={'/footwear'} className='cursor-pointer hover:underline'><li className=''>FootWear</li></Link>
                 </ul>
             </div>
+
+            {/* Cart iCon & HamBurger iCon  */}
             <div className='flex gap-2 items-center'>
                 <div onClick={handleSideCart} className="mx-3">
                     <FiShoppingCart className='text-3xl cursor-pointer' />
@@ -49,6 +52,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                 <div onClick={() => setVisible(true)} className='lg:hidden mr-5 text-2xl cursor-pointer'>
                     <GiHamburgerMenu />
                 </div>
+
             </div>
 
             {/* Humburger Side Menu  */}
@@ -76,6 +80,8 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                 <h2 className='font-bold text-3xl relative -top-1.5 text-center'>Shopping Cart</h2>
                 <span onClick={handleSideCart} className='absolute right-3 top-2 text-2xl cursor-pointer'><MdCancel /></span>
                 <hr />
+
+                {/* Items  */}
                 <ol className='list-decimal my-10'>
                     <div className='flex'>
                         <h3 className='w-2/3 text-xl font-bold'>Items</h3>
@@ -90,7 +96,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                     {
                         Object.keys(cart).map(id => {
                             return (
-                                <li key={id}>
+                                <li key={id} className='my-2 ml-4'>
                                     <div className='flex text-left'>
                                         <div className='w-2/3'>
                                             <div>{cart[id].name}</div>
@@ -111,7 +117,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
                 {/* Checkout & ClearCart  */}
                 <div className="flex">
-                    <Link href={'/checkout'} className='mr-3'>
+                    <Link onClick={handleSideCart} href={'/checkout'} className='mr-3'>
                         <button className="flex items-center gap-2 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md w-full cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
                         </button>
                     </Link>
@@ -120,7 +126,9 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                 </div>
 
             </div>
+
         </div>
+
     )
 }
 

@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }) {
 
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")))
+        saveCart(JSON.parse(localStorage.getItem("cart")))
       }
 
     } catch (error) {
@@ -39,7 +40,7 @@ export default function App({ Component, pageProps }) {
 
   const addToCart = (id, qty, price, name, size) => {
 
-    let newCart = {...cart};
+    let newCart = { ...cart };
 
     if (id in cart) {
       newCart[id].qty += qty
@@ -54,7 +55,7 @@ export default function App({ Component, pageProps }) {
 
   const removeFromCart = (id, qty, price, name, size) => {
 
-    let newCart = {...cart};
+    let newCart = { ...cart };
 
     if (id in newCart) {
       newCart[id].qty -= qty
