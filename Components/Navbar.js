@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from "next/router";
 import { FiShoppingCart } from "react-icons/fi";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdAccountCircle } from "react-icons/md";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { FaShoppingBag, FaArrowRight, FaTrashAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -44,6 +44,11 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
             {/* Cart iCon & HamBurger iCon  */}
             <div className='flex gap-2 items-center'>
+                <Link href={'/login'}>
+                    <div>
+                        <MdAccountCircle className='text-4xl cursor-pointer ' />
+                    </div>
+                </Link>
                 <div onClick={handleSideCart} className="mx-3">
                     <FiShoppingCart className='text-3xl cursor-pointer' />
                 </div>

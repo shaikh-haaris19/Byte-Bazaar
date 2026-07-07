@@ -26,7 +26,6 @@ export default function App({ Component, pageProps }) {
   }, [])
 
   const saveCart = (cart) => {
-    console.log(cart)
     localStorage.setItem("cart", JSON.stringify(cart))
 
     let subAmt = 0;
