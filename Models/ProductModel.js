@@ -7,11 +7,11 @@ const productSchema = new mongoose.Schema({
     description: { type: String, required: true },
     image: { type: Array, required: true },
     category: { type: String, required: true },
-    sizes: { type: Array, required: true },
-    colors: { type: Array },
+    size: { type: String, required: true },
+    color: { type: String },
     price: { type: Number, required: true },
     availableQty: { type: Number, required: true }
-    
+
 }, { timestamps: true })
 
 const productModel = mongoose.models.product || mongoose.model('product', productSchema)

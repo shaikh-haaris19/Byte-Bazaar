@@ -1,13 +1,18 @@
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import mongoose from 'mongoose'
+import productModel from '../../../Models/ProductModel'
 
-const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
+const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, variants }) => {
 
+    console.log("Products : ", product)
+    console.log("Variants : ", variants)
     const router = useRouter()
     const { slug } = router.query
     const [pin, setPin] = useState([]);
     const [serviceability, setServiceability] = useState(null);
-    const [size, setSize] = useState("SM")
+    const [size, setSize] = useState(product.size)
+    const [color, setColor] = useState(product.color)
 
     const checkServiceability = async () => {
 
@@ -25,8 +30,20 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
         setPin(e.target.value)
     }
 
-    const handleSelectChange = (e) => {
-        setSize(e.target.value)
+    const colorClasses = {
+        White: "bg-white",
+        Black: "bg-black",
+        Blue: "bg-blue-700",
+        Green: "bg-green-700",
+        Pink: "bg-pink-300",
+        Red: "bg-red-700"
+    };
+
+    const refreshPage = (newSize, newColor) => {
+
+        let url = `http://localhost:3000/product/${variants[newColor][newSize]['slug']}`
+        window.location.href = url
+
     }
 
     return (
@@ -79,18 +96,33 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                                 <div className="flex">
                                     <span className="mr-3">Color</span>
-                                    <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                                    <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                                    <button className="border-2 border-gray-300 ml-1 bg-yellow-500 rounded-full w-6 h-6 focus:outline-none"></button>
+
+                                    <div className="flex">
+
+                                        <span className="mr-3">Color</span>
+
+                                        {
+                                            Object.keys(variants).map(clr => (
+                                                Object.keys(variants[clr]).includes(size) &&
+                                                <button key={clr} onClick={() => refreshPage(size, clr)} className={`border-b-amber-100 cursor-pointer border-2 border-gray-300 ml-1 ${colorClasses[clr]} rounded-full w-6 h-6 focus:outline-none ${color === clr ? 'border-black' : 'border-gray-300'}`}></button>
+                                            ))
+                                        }
+                                    </div>
+
                                 </div>
+
                                 <div className="flex ml-6 items-center">
                                     <span className="mr-3">Size</span>
                                     <div className="relative">
-                                        <select onChange={handleSelectChange} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:border-yellow-500 text-base pl-3 pr-10">
-                                            <option value={'SM'}>SM</option>
-                                            <option value={'M'}>M</option>
-                                            <option value={'L'}>L</option>
-                                            <option value={'XL'}>XL</option>
+                                        <select value={size} onChange={(e) => { refreshPage(e.target.value, color) }} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:border-yellow-500 text-base pl-3 pr-10">
+
+                                            {Object.keys(variants[color]).includes('S') && <option value={'S'}>S</option>}
+                                            {Object.keys(variants[color]).includes('M') && <option value={'M'}>M</option>}
+                                            {Object.keys(variants[color]).includes('L') && <option value={'L'}>L</option>}
+                                            {Object.keys(variants[color]).includes('XL') && <option value={'XL'}>XL</option>}
+                                            {Object.keys(variants[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
+
+
                                         </select>
                                         <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                                             <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
@@ -126,6 +158,36 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             </section>
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+
+    if (!mongoose.connection.readyState) {
+        await mongoose.connect(process.env.MONGODB_URI)
+    }
+
+    let Product = await productModel.findOne({ slug: context.query.slug })
+    let Variants = await productModel.find({ title: Product.title })
+
+    let colorSizeSlug = {}  // Example : { red : { XL : { slug :  'OverSized-Tshirt' } } }
+
+    for (let item of Variants) {
+
+        if (Object.keys(colorSizeSlug).includes(item.color)) {
+            colorSizeSlug[item.color][item.size] = { slug: item.slug }
+        } else {
+            colorSizeSlug[item.color] = {}
+            colorSizeSlug[item.color][item.size] = { slug: item.slug }
+        }
+    }
+
+    return {
+        props:
+        {
+            product: JSON.parse(JSON.stringify(Product)),
+            variants: JSON.parse(JSON.stringify(colorSizeSlug))
+        }
+    }
 }
 
 export default Slug
