@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import mongoose from 'mongoose'
 import productModel from '../../../Models/ProductModel'
+import { toast } from 'react-toastify'
 
 const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, variants, BuyNow }) => {
 
@@ -19,8 +20,10 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
         if (parsedPins.includes(Number(pin))) {
             setServiceability(true);
+            toast.success('Yay ! PinCode Serviceable')
         } else {
             setServiceability(false)
+            toast.error('Sorry ! PinCode Not UnServiceable')
         }
     }
 
@@ -133,7 +136,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
                                 <button onClick={() => BuyNow(product.slug, 1, product.price, product.title, product.size, product.color)} className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Buy Now</button>
 
-                                <button onClick={() => addToCart(product.slug, 1, product.price, product.title, product.size, product.color)} className="flex ml-3 text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
+                                <button onClick={() => { toast.success('Product Added SuccessFully !'); addToCart(product.slug, 1, product.price, product.title, product.size, product.color) }} className="flex ml-3 text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
                             </div>
 
                             {/* Pincode Availability  */}
@@ -141,16 +144,6 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                 <input onChange={onChange} type="text" placeholder='Enter Your PinCode' className='p-2 border-2 rounded border-amber-300 outline-amber-300 my-1' />
                                 <button onClick={checkServiceability} className='text-white bg-yellow-500 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-600 rounded my-1'>Check Availability</button>
                             </div>
-                            {(!serviceability && serviceability != null) &&
-                                <div className="text-red-600 text-center text-sm py-2">
-                                    Sorry ! We Do Not Deliver To This PinCode
-                                </div>
-                            }
-                            {(serviceability && serviceability != null) &&
-                                <div className="text-green-600 text-center text-sm py-2">
-                                    Yay ! We Do Deliver To This PinCode
-                                </div>
-                            }
                         </div>
                     </div>
                 </div>

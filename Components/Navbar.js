@@ -50,7 +50,6 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                     </div>
                 </Link>
                 <div onClick={handleSideCart} className="mr-8">
-                    <span className='absolute bottom-6 bg-black text-white rounded-full right-4 text-xs px-1'>1</span>
                     <FiShoppingCart className='text-3xl cursor-pointer' />
                 </div>
 

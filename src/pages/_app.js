@@ -3,6 +3,7 @@ import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { ToastContainer } from 'react-toastify';
 
 export default function App({ Component, pageProps }) {
 
@@ -89,6 +90,7 @@ export default function App({ Component, pageProps }) {
 
   return <>
     <Navbar cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+    <ToastContainer autoClose={3000} theme="dark" />
     <Component cart={cart} BuyNow={BuyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
     <Footer />
   </>
