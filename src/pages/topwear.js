@@ -16,11 +16,21 @@ const topwear = ({ allProducts }) => {
 
                                 return (
                                     <div key={allProducts[product]._id} className="lg:w-1/4 md:w-3/4 p-4 w-3/2 border m-7 shadow-md">
+
+                                        {/* Product Image  */}
                                         <Link href={`/product/${allProducts[product].slug}`} className="block relative rounded overflow-hidden cursor-pointer">
+
                                             <img alt="ecommerce" className="h-[40vh] md:h-[36vh] block m-auto" src={allProducts[product].image} />
+
                                         </Link>
+
+                                        {/* Product : Title , Description , Sizes & Color  */}
                                         <div className="mt-4 text-center">
+
+                                            {/* Product Title  */}
                                             <h2 className="text-gray-900 title-font text-lg font-bold">{allProducts[product].title}</h2>
+
+                                            {/* Product Description  */}
                                             <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{allProducts[product].description}</h3>
                                             <p className="mt-1 font-semibold">₹{allProducts[product].price}</p>
 
@@ -46,6 +56,7 @@ const topwear = ({ allProducts }) => {
                                             </div>
 
                                         </div>
+
                                     </div>
                                 )
 

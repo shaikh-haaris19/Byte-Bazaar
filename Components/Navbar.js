@@ -29,10 +29,14 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
         <div className='flex justify-between py-3 items-center lg:flex-row shadow sticky top-0 z-20 bg-white'>
             <div className="logo mx-2">
+
+                {/* Logo  */}
                 <Link href={'/'} className='cursor-pointer'>
                     <Image width={90} height={90} src={'/Logo.png'} alt='HeroImage'></Image>
                 </Link>
             </div>
+
+            {/* Navigation's */}
             <div className='nav hidden lg:block'>
                 <ul className='flex space-x-2 text-sm md:space-x-6 md:text-lg my-4 font-bold'>
                     <Link href={'/topwear'} className='cursor-pointer hover:underline'><li className=''>TopWear</li></Link>

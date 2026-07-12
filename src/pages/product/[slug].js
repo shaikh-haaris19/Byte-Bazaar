@@ -5,8 +5,6 @@ import productModel from '../../../Models/ProductModel'
 import { toast } from 'react-toastify'
 
 const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, variants, BuyNow }) => {
-    console.log(product)
-    console.log(variants)
 
     const router = useRouter()
     const { slug } = router.query
@@ -54,11 +52,17 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
             <section className="text-gray-600 body-font overflow-hidden">
                 <div className="container px-5 py-15 mx-auto">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
+
+                        {/* Product Image */}
                         <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-full px-10 lg:px-24 object-cover object-top rounded" src={product.image[0]} />
                         <div className="lg:w-1/2 w-full mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">BYTE-BAZAAR</h2>
+
+                            {/* Product Title  */}
                             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.slug} ({product.size}/{product.color})</h1>
                             <div className="flex mb-4">
+
+                                {/* Review Star's  */}
                                 <span className="flex items-center">
                                     <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-yellow-500" viewBox="0 0 24 24">
                                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
@@ -77,6 +81,8 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                     </svg>
                                     <span className="text-gray-600 ml-3">4 Reviews</span>
                                 </span>
+
+                                {/* FaceBook , Twitter & WatsApp Icon  */}
                                 <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
                                     <a className="text-gray-500">
                                         <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
@@ -94,12 +100,18 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                         </svg>
                                     </a>
                                 </span>
+
                             </div>
+
+                            {/* Product Description  */}
                             <p className="leading-relaxed">Experience comfort and style with our Classic Cotton T‑Shirt. Made from 100% premium cotton, it offers a soft touch, breathable fabric, and a perfect fit for everyday wear. Designed with durability in mind, this versatile tee pairs effortlessly with jeans, shorts, or layered under jackets.</p>
+
+                            {/* Colors & Sizes  */}
                             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                                 <div className="flex">
                                     <span className="mr-3">Colors : </span>
 
+                                    {/* Color  */}
                                     <div className="flex">
 
                                         {
@@ -112,6 +124,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
                                 </div>
 
+                                {/* Sizes  */}
                                 <div className="flex ml-6 items-center">
                                     <span className="mr-3">Size</span>
                                     <div className="relative">
@@ -132,7 +145,10 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                         </span>
                                     </div>
                                 </div>
+
                             </div>
+
+                            {/* BuyNow & AddToCart Button   */}
                             <div className="flex">
                                 <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span>
 
@@ -146,6 +162,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                 <input onChange={onChange} type="text" placeholder='Enter Your PinCode' className='p-2 border-2 rounded border-amber-300 outline-amber-300 my-1' />
                                 <button onClick={checkServiceability} className='text-white bg-yellow-500 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-600 rounded my-1'>Check Availability</button>
                             </div>
+
                         </div>
                     </div>
                 </div>
