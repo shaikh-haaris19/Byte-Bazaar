@@ -49,7 +49,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                         <MdAccountCircle className='text-4xl cursor-pointer ' />
                     </div>
                 </Link>
-                <div onClick={handleSideCart} className="mr-8">
+                <div onClick={handleSideCart} className="mr-1">
                     <FiShoppingCart className='text-3xl cursor-pointer' />
                 </div>
 
@@ -121,13 +121,13 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                 </ol>
 
                 {/* Checkout & ClearCart  */}
-                <div className="flex">
+                <div className="flex justify-evenly">
                     <Link onClick={handleSideCart} href={'/checkout'} className='mr-3'>
-                        <button className="flex items-center gap-2 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md w-full cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
+                        <button className="flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
                         </button>
                     </Link>
 
-                    <button onClick={() => clearCart()} className="flex items-center gap-2 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded text-md w-full cursor-pointer transform transition-transform duration-100 hover:scale-110">ClearCart <FaTrashAlt /></button>
+                    <button onClick={() => clearCart()} className="flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">ClearCart <FaTrashAlt /></button>
                 </div>
 
             </div>

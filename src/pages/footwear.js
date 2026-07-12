@@ -1,97 +1,98 @@
-import React from 'react'
+import mongoose from 'mongoose'
 import Link from 'next/link'
+import React from 'react'
+import productModel from '../../Models/ProductModel'
 
-const footwear = () => {
+const footwear = ({ allProducts }) => {
+
     return (
         <div>
             <section className="text-gray-600 body-font">
                 <div className="container px-5 py-24 mx-auto">
                     <div className="flex flex-wrap -m-4 justify-center">
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹160.00</p>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹210.15</p>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹120.00</p>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹180.40</p>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹160.00</p>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹210.15</p>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹120.00</p>
-                            </div>
-                        </div>
-                        <div className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
-                            <Link href={'/product/leatherShoes'} className="block relative rounded overflow-hidden cursor-pointer">
-                                <img alt="ecommerce" className="block m-auto pt-20" src="https://m.media-amazon.com/images/I/81eduUTIXhL._AC_UL480_FMwebp_QL65_.jpg" />
-                            </Link>
-                            <div className="mt-4 text-center">
-                                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Leather Shoes</h3>
-                                <h2 className="text-gray-900 title-font text-lg font-medium">Stylish & Confortable Shoes</h2>
-                                <p className="mt-1">₹180.40</p>
-                            </div>
-                        </div>
+
+                        {
+                            Object.keys(allProducts).map(product => {
+
+                                return (
+                                    <div key={allProducts[product]._id} className="lg:w-1/4 md:w-3/4 p-4 w-3/2 border m-7 shadow-md">
+                                        <Link href={`/product/${allProducts[product].slug}`} className="block relative rounded overflow-hidden cursor-pointer">
+                                            <img alt="ecommerce" className="h-[40vh] md:h-[36vh] block m-auto" src={allProducts[product].image} />
+                                        </Link>
+                                        <div className="mt-4 text-center">
+                                            <h2 className="text-gray-900 title-font text-lg font-bold">{allProducts[product].title}</h2>
+                                            <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{allProducts[product].description}</h3>
+                                            <p className="mt-1 font-semibold">₹{allProducts[product].price}</p>
+
+                                            {/* Sizes  */}
+                                            <div className="mt-1 text-gray-600"> <span className='text-md'>Sizes:</span>
+                                                {allProducts[product].size.includes('7 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>7 UK</span>}
+                                                {allProducts[product].size.includes('8 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>8 UK</span>}
+                                                {allProducts[product].size.includes('9 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>9 UK</span>}
+                                                {allProducts[product].size.includes('10 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>10 UK</span>}
+                                                {allProducts[product].size.includes('11 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>11 UK</span>}
+                                            </div>
+
+                                            {/* Color  */}
+                                            <div className="mt-1.5 text-gray-600 flex items-center justify-center"> <span className='text-md'>Colors:</span>
+
+                                                {allProducts[product].color.includes('Gray') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>}
+                                                {allProducts[product].color.includes('Camel') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-yellow-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+                                                {allProducts[product].color.includes('Blue') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-blue-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+                                                {allProducts[product].color.includes('Green') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-green-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+                                                {allProducts[product].color.includes('Brown') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-yellow-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+                                                {allProducts[product].color.includes('Red') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                )
+
+                            })
+                        }
+
                     </div>
                 </div>
             </section>
         </div>
     )
+}
+
+export async function getServerSideProps() {
+
+    if (!mongoose.connection.readyState) {
+        await mongoose.connect(process.env.MONGODB_URI)
+    }
+
+    let allProducts = await productModel.find({ category: 'footwear' })
+    let footwear = {};
+
+    for (let item of allProducts) {
+
+        if (item.title in footwear) {
+
+            if (item.availableQty > 0) {
+                if (!footwear[item.title].color.includes(item.color)) {
+                    footwear[item.title].color.push(item.color)
+                }
+
+
+                if (!footwear[item.title].size.includes(item.size)) {
+                    footwear[item.title].size.push(item.size)
+                }
+            }
+
+        } else {
+            footwear[item.title] = JSON.parse(JSON.stringify(item))
+            if (item.availableQty > 0) {
+                footwear[item.title].color = [item.color]
+                footwear[item.title].size = [item.size]
+            }
+        }
+
+    }
+    return { props: { allProducts: JSON.parse(JSON.stringify(footwear)) } }
 }
 
 export default footwear

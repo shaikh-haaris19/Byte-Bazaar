@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import productModel from '../../Models/ProductModel'
 
 const topwear = ({ allProducts }) => {
@@ -20,8 +20,8 @@ const topwear = ({ allProducts }) => {
                                             <img alt="ecommerce" className="h-[40vh] md:h-[36vh] block m-auto" src={allProducts[product].image} />
                                         </Link>
                                         <div className="mt-4 text-center">
-                                            <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{allProducts[product].slug}</h3>
                                             <h2 className="text-gray-900 title-font text-lg font-bold">{allProducts[product].title}</h2>
+                                            <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{allProducts[product].description}</h3>
                                             <p className="mt-1 font-semibold">₹{allProducts[product].price}</p>
 
                                             {/* Sizes  */}
@@ -44,7 +44,7 @@ const topwear = ({ allProducts }) => {
                                                 {allProducts[product].color.includes('Red') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none"></button>}
 
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 )

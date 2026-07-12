@@ -5,6 +5,8 @@ import productModel from '../../../Models/ProductModel'
 import { toast } from 'react-toastify'
 
 const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, variants, BuyNow }) => {
+    console.log(product)
+    console.log(variants)
 
     const router = useRouter()
     const { slug } = router.query
@@ -36,7 +38,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
         Black: "bg-black",
         Blue: "bg-blue-700",
         Green: "bg-green-700",
-        Pink: "bg-pink-300",
+        Brown: "bg-yellow-700",
         Red: "bg-red-700"
     };
 
@@ -159,7 +161,7 @@ export async function getServerSideProps(context) {
     }
 
     let Product = await productModel.findOne({ slug: context.query.slug })
-    let Variants = await productModel.find({ title: Product.title })
+    let Variants = await productModel.find({ title: Product.title, category: Product.category })
 
     let colorSizeSlug = {}  // Example : { red : { XL : { slug :  'OverSized-Tshirt' } } }
 
