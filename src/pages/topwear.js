@@ -15,7 +15,7 @@ const topwear = ({ allProducts }) => {
                             Object.keys(allProducts).map(product => {
 
                                 return (
-                                    <div key={allProducts[product]._id} className="lg:w-1/5 md:w-1/2 p-4 w-full border m-7 shadow-md">
+                                    <div key={allProducts[product]._id} className="lg:w-1/4 md:w-3/4 p-4 w-3/2 border m-7 shadow-md">
                                         <Link href={`/product/${allProducts[product].slug}`} className="block relative rounded overflow-hidden cursor-pointer">
                                             <img alt="ecommerce" className="h-[40vh] md:h-[36vh] block m-auto" src={allProducts[product].image} />
                                         </Link>
@@ -35,13 +35,16 @@ const topwear = ({ allProducts }) => {
 
                                             {/* Color  */}
                                             <div className="mt-1.5 text-gray-600 flex items-center justify-center"> <span className='text-md'>Colors:</span>
+
                                                 {allProducts[product].color.includes('White') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-white rounded-full w-6 h-6 focus:outline-none"></button>}
                                                 {allProducts[product].color.includes('Black') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-black rounded-full w-6 h-6 focus:outline-none"></button>}
                                                 {allProducts[product].color.includes('Blue') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-blue-700 rounded-full w-6 h-6 focus:outline-none"></button>}
                                                 {allProducts[product].color.includes('Green') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-green-700 rounded-full w-6 h-6 focus:outline-none"></button>}
                                                 {allProducts[product].color.includes('Pink') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-pink-300 rounded-full w-6 h-6 focus:outline-none"></button>}
                                                 {allProducts[product].color.includes('Red') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 )
@@ -82,7 +85,7 @@ export async function getServerSideProps() {
 
         } else {
             topwear[item.title] = JSON.parse(JSON.stringify(item))
-            if(item.availableQty > 0){
+            if (item.availableQty > 0) {
                 topwear[item.title].color = [item.color]
                 topwear[item.title].size = [item.size]
             }

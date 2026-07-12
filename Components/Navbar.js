@@ -49,7 +49,8 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                         <MdAccountCircle className='text-4xl cursor-pointer ' />
                     </div>
                 </Link>
-                <div onClick={handleSideCart} className="mx-3">
+                <div onClick={handleSideCart} className="mr-8">
+                    <span className='absolute bottom-6 bg-black text-white rounded-full right-4 text-xs px-1'>1</span>
                     <FiShoppingCart className='text-3xl cursor-pointer' />
                 </div>
 
@@ -80,7 +81,7 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
 
             {/* Side Cart  */}
-            <div ref={ref} className="cart absolute top-0 right-0  bg-[#E5B25D] py-10 px-8 text-blue-950 shadow-xl transform transition-transform translate-x-full h-screen text-xl lg:text-lg prata-regular">
+            <div ref={ref} className="cart overflow-y-scroll absolute top-0 right-0  bg-[#E5B25D] py-10 px-8 text-blue-950 shadow-md transform transition-transform translate-x-full h-screen text-xl lg:text-lg prata-regular">
 
                 <h2 className='font-bold text-3xl relative -top-1.5 text-center'>Shopping Cart</h2>
                 <span onClick={handleSideCart} className='absolute right-3 top-2 text-2xl cursor-pointer'><MdCancel /></span>
@@ -104,13 +105,13 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                                 <li key={id} className='my-2 ml-4'>
                                     <div className='flex text-left'>
                                         <div className='w-2/3'>
-                                            <div>{cart[id].name}</div>
+                                            <div>{cart[id].name} ({cart[id].color}/{cart[id].size})</div>
                                         </div>
                                         <div className='w-1/3 text-center text-xl'>
                                             <div className='flex items-center gap-x-2.5'>
-                                                <AiFillMinusCircle onClick={() => removeFromCart(id, 1, cart[id].price, cart[id].name, 'M')} className='cursor-pointer' />
+                                                <AiFillMinusCircle onClick={() => removeFromCart(id, 1, cart[id].price, cart[id].name, cart[id].size, cart[id].color)} className='cursor-pointer' />
                                                 <span className='text-xl'>{cart[id].qty}</span>
-                                                <AiFillPlusCircle onClick={() => addToCart(id, 1, cart[id].price, cart[id].name, 'M')} className='cursor-pointer' />
+                                                <AiFillPlusCircle onClick={() => addToCart(id, 1, cart[id].price, cart[id].name, cart[id].size, card[id].color)} className='cursor-pointer' />
                                             </div>
                                         </div>
                                     </div>

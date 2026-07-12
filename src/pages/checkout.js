@@ -111,7 +111,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                   <li key={id}>
                     <div className='flex text-left'>
                       <div className='w-2/3'>
-                        <div>{cart[id].name}</div>
+                        <div>{cart[id].name} ({cart[id].color}/{cart[id].size})</div>
                       </div>
                       <div className='w-1/3 text-center text-xl'>
                         <div className='flex items-center gap-x-2.5 justify-end'>

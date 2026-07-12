@@ -3,10 +3,8 @@ import React, { useEffect, useState } from 'react'
 import mongoose from 'mongoose'
 import productModel from '../../../Models/ProductModel'
 
-const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, variants }) => {
+const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, variants, BuyNow }) => {
 
-    console.log("Products : ", product)
-    console.log("Variants : ", variants)
     const router = useRouter()
     const { slug } = router.query
     const [pin, setPin] = useState([]);
@@ -51,10 +49,10 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
             <section className="text-gray-600 body-font overflow-hidden">
                 <div className="container px-5 py-15 mx-auto">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                        <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-full px-10 lg:px-24 object-cover object-top rounded" src="https://m.media-amazon.com/images/I/61j2FBMg2LL._AC_SX416_CB1169409_QL70_.jpg" />
+                        <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-full px-10 lg:px-24 object-cover object-top rounded" src={product.image[0]} />
                         <div className="lg:w-1/2 w-full mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">BYTE-BAZAAR</h2>
-                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">The Catcher in the Rye</h1>
+                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.slug} ({product.size}/{product.color})</h1>
                             <div className="flex mb-4">
                                 <span className="flex items-center">
                                     <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-yellow-500" viewBox="0 0 24 24">
@@ -95,11 +93,9 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                             <p className="leading-relaxed">Experience comfort and style with our Classic Cotton T‑Shirt. Made from 100% premium cotton, it offers a soft touch, breathable fabric, and a perfect fit for everyday wear. Designed with durability in mind, this versatile tee pairs effortlessly with jeans, shorts, or layered under jackets.</p>
                             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                                 <div className="flex">
-                                    <span className="mr-3">Color</span>
+                                    <span className="mr-3">Colors : </span>
 
                                     <div className="flex">
-
-                                        <span className="mr-3">Color</span>
 
                                         {
                                             Object.keys(variants).map(clr => (
@@ -133,8 +129,11 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                 </div>
                             </div>
                             <div className="flex">
-                                <span className="title-font font-medium text-2xl text-gray-900">₹499</span>
-                                <button onClick={() => addToCart(slug, 1, 499, 'Jacket', size)} className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
+                                <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span>
+
+                                <button onClick={() => BuyNow(product.slug, 1, product.price, product.title, product.size, product.color)} className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Buy Now</button>
+
+                                <button onClick={() => addToCart(product.slug, 1, product.price, product.title, product.size, product.color)} className="flex ml-3 text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
                             </div>
 
                             {/* Pincode Availability  */}
