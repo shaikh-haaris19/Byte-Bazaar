@@ -8,7 +8,7 @@ import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { FaShoppingBag, FaArrowRight, FaTrashAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
+const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
     const ref = useRef()
     const [visible, setVisible] = useState(false)
@@ -32,13 +32,13 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
                 {/* Logo  */}
                 <Link href={'/'} className='cursor-pointer'>
-                    <Image width={90} height={90} src={'/Logo.png'} alt='HeroImage'></Image>
+                    <Image width={90} height={90} src={'/Logo.png'} alt='Logo'></Image>
                 </Link>
             </div>
 
             {/* Navigation's */}
             <div className='nav hidden lg:block'>
-                <ul className='flex space-x-2 text-sm md:space-x-6 md:text-lg my-4 font-bold'>
+                <ul className='flex space-x-2 text-sm md:space-x-6 md:text-lg my-2 font-bold'>
                     <Link href={'/topwear'} className='cursor-pointer hover:underline'><li className=''>TopWear</li></Link>
                     <Link href={'/bottomwear'} className='cursor-pointer hover:underline'><li className=''>BottomWear</li></Link>
                     <Link href={'/winterwear'} className='cursor-pointer hover:underline'><li className=''>WinterWear</li></Link>
@@ -46,22 +46,50 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                 </ul>
             </div>
 
-            {/* Cart iCon & HamBurger iCon  */}
+            {/* Cart iCon , HamBurger iCon & Profile Icon  */}
             <div className='flex gap-2 mx-5 items-center'>
-                <Link href={'/login'}>
-                    <div>
-                        <MdAccountCircle className='text-4xl cursor-pointer mr-2' />
-                    </div>
-                </Link>
-                <div onClick={handleSideCart}>
-                    <FiShoppingCart className='text-3xl cursor-pointer' />
-                </div>
+
 
                 {/* Hamburger  */}
-                <div onClick={() => setVisible(true)} className='lg:hidden mr-5 text-2xl cursor-pointer'>
+                <div onClick={() => setVisible(true)} className='lg:hidden text-2xl cursor-pointer'>
                     <GiHamburgerMenu />
                 </div>
 
+                {/* Cart Icon  */}
+                <div onClick={handleSideCart} className='mx-3'>
+                    <FiShoppingCart className='text-3xl cursor-pointer' />
+                </div>
+
+                {/* Profile Icon  */}
+                {!user.value &&
+                    <Link href={'/login'}>
+                        <button class="flex bg-amber-400 text-white hover:opacity-80 cursor-pointer py-2 lg:py-3/2 px-2 lg:px-4 focus:outline-none rounded text-xs sm:text-sm lg:text-lg">Login</button>
+                    </Link>
+                }
+
+                {/* Profile Hover  */}
+                <div className='group'>
+                    {user.value && <MdAccountCircle className='text-4xl cursor-pointer mr-2' />}
+                    <div className='group-hover:block hidden absolute top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
+
+                        <ul className='flex flex-col mx-3 my-4 gap-5'>
+                            <Link href={'/myaccount'}>
+                                <li className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Account</li>
+                            </Link>
+
+                            <Link href={'/order'}>
+                                <li className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
+                            </Link>
+
+                            <Link href={'/login'}>
+                                <li onClick={LogOut} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>LogOut</li>
+                            </Link>
+
+                        </ul>
+
+                    </div>
+
+                </div>
             </div>
 
             {/* Humburger Side Menu  */}

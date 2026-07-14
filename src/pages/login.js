@@ -33,6 +33,8 @@ const Login = () => {
     let parsedRes = await res.json();
 
     if (parsedRes.success) {
+      localStorage.setItem('token', parsedRes.token)
+
       toast.success(parsedRes.message, {
         position: "top-left",
         autoClose: 5000,

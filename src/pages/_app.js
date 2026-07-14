@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }) {
 
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
+  const [user, setUser] = useState({ value: null })
 
 
   useEffect(() => {
@@ -27,7 +28,12 @@ export default function App({ Component, pageProps }) {
       localStorage.clear()
     }
 
-  }, [])
+    let token = localStorage.getItem('token')
+    if (token) {
+      setUser({ value: token })
+    }
+
+  }, [router.query])
 
   const saveCart = (cart) => {
     localStorage.setItem("cart", JSON.stringify(cart))
@@ -88,8 +94,13 @@ export default function App({ Component, pageProps }) {
     saveCart({})
   }
 
+  const LogOut = () => {
+    localStorage.removeItem('token')
+    setUser({ value: null })
+  }
+
   return <>
-    <Navbar cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+    <Navbar user={user} LogOut={LogOut} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
     <ToastContainer autoClose={3000} theme="dark" />
     <Component cart={cart} BuyNow={BuyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
     <Footer />
