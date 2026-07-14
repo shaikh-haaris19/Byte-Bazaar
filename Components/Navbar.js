@@ -47,13 +47,13 @@ const Navbar = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             </div>
 
             {/* Cart iCon & HamBurger iCon  */}
-            <div className='flex gap-2 items-center'>
+            <div className='flex gap-2 mx-5 items-center'>
                 <Link href={'/login'}>
                     <div>
-                        <MdAccountCircle className='text-4xl cursor-pointer ' />
+                        <MdAccountCircle className='text-4xl cursor-pointer mr-2' />
                     </div>
                 </Link>
-                <div onClick={handleSideCart} className="mr-1">
+                <div onClick={handleSideCart}>
                     <FiShoppingCart className='text-3xl cursor-pointer' />
                 </div>
 

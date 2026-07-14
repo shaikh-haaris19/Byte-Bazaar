@@ -1,7 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 
 const SignUp = () => {
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const onSubmitHandler = async (e) => {
+
+    e.preventDefault();
+
+    const userCredentials = {
+      name,
+      email,
+      password
+    }
+
+    let res = await fetch("http://localhost:3000/api/signUp", {
+
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify(userCredentials)
+    })
+
+    let parsedRes = await res.json();
+
+    if (parsedRes.success) {
+      toast.success(parsedRes.message, {
+        position: "top-left",
+        autoClose: 5000,
+        theme: "dark",
+      })
+    } else {
+      toast.error('Some Error Occured !, Please Try Again',{
+        position: "top-left",
+        autoClose: 5000,
+        theme: "dark",
+      });
+    }
+
+    setName('')
+    setEmail('')
+    setPassword('')
+
+  }
+
   return (
     <section>
       <div className="flex flex-col items-center justify-start px-6 py-8 mx-auto md:h-screen">
@@ -19,24 +68,24 @@ const SignUp = () => {
             </h1>
 
             {/* Form  */}
-            <form className="space-y-4 md:space-y-3" action="#">
+            <form onSubmit={onSubmitHandler} method='POST' className="space-y-4 md:space-y-3" action="#">
 
               {/* User Name  */}
               <div>
                 <label htmlFor="userName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">UserName</label>
-                <input type="text" name="userName" id="userName" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                <input onChange={(e) => setName(e.target.value)} value={name} type="text" name="userName" id="userName" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
               </div>
 
               {/* User Email  */}
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
-                <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
               </div>
 
               {/* User PassWord  */}
               <div>
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
-                <input type="password" name="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" name="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
               </div>
 
               {/* SignIn Button  */}
