@@ -29,7 +29,7 @@ const SignUp = () => {
       password
     }
 
-    let res = await fetch("http://localhost:3000/api/signUp", {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signUp`, {
 
       method: "post",
       headers: {

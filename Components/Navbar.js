@@ -13,6 +13,11 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
     const ref = useRef()
     const [visible, setVisible] = useState(false)
     const router = useRouter()
+    const [dropDown, setDropDown] = useState(false)
+
+    const handleDropDown = () => {
+        setDropDown(!dropDown)
+    }
 
     const handleSideCart = () => {
         if (ref.current.classList.contains('translate-x-full')) {
@@ -63,29 +68,31 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                 {/* Profile Icon  */}
                 {!user.value &&
                     <Link href={'/login'}>
-                        <button class="flex bg-amber-400 text-white hover:opacity-80 cursor-pointer py-2 lg:py-3/2 px-2 lg:px-4 focus:outline-none rounded text-xs sm:text-sm lg:text-lg">Login</button>
+                        <button className="flex bg-amber-400 text-white hover:opacity-80 cursor-pointer py-2 lg:py-3/2 px-2 lg:px-4 focus:outline-none rounded text-xs sm:text-sm lg:text-lg">Login</button>
                     </Link>
                 }
 
                 {/* Profile Hover  */}
-                <div className='group'>
+                <div onClick={()=> handleDropDown()} onMouseEnter={()=> handleDropDown()}>
                     {user.value && <MdAccountCircle className='text-4xl cursor-pointer mr-2' />}
-                    <div className='group-hover:block hidden absolute top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
+                    <div className='absolute top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
 
-                        <ul className='flex flex-col mx-3 my-4 gap-5'>
-                            <Link href={'/myaccount'}>
-                                <li className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Account</li>
-                            </Link>
+                        {
+                            dropDown && <ul className='flex flex-col mx-3 my-4 gap-5'>
+                                <Link href={'/myaccount'}>
+                                    <li onClick={ handleDropDown } className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Account</li>
+                                </Link>
 
-                            <Link href={'/order'}>
-                                <li className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
-                            </Link>
+                                <Link href={'/orders'}>
+                                    <li onClick={ handleDropDown } className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
+                                </Link>
 
-                            <Link href={'/login'}>
-                                <li onClick={LogOut} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>LogOut</li>
-                            </Link>
+                                <Link href={'/login'}>
+                                    <li onClick={()=> { LogOut() ; handleDropDown()}} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>LogOut</li>
+                                </Link>
 
-                        </ul>
+                            </ul>
+                        }
 
                     </div>
 

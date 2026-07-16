@@ -15,7 +15,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
     const checkServiceability = async () => {
 
-        let pins = await fetch('http://localhost:3000/api/pincode');
+        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
         let parsedPins = await pins.json();
 
         if (parsedPins.includes(Number(pin))) {
@@ -42,7 +42,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
     const refreshPage = (newSize, newColor) => {
 
-        let url = `http://localhost:3000/product/${variants[newColor][newSize]['slug']}`
+        let url = `${process.env.NEXT_PUBLIC_HOST}/product/${variants[newColor][newSize]['slug']}`
         window.location.href = url
 
     }
