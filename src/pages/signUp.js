@@ -1,12 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 const SignUp = () => {
 
+  const router = useRouter()
+
+  // If User If Already LoggedIn 
+    useEffect(()=>{
+    if(localStorage.getItem('token')){
+      router.push('/')
+    }
+  },[])
+  
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
 
   const onSubmitHandler = async (e) => {
 

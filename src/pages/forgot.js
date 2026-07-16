@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const forgot = () => {
+
+    const router = useRouter()
+
+    // If User If Already LoggedIn 
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            router.push('/')
+        }
+    }, [])
+
     return (
         <section>
             <div className="flex flex-col items-center justify-start px-6 py-8 mx-auto md:h-screen lg:pt-15">
