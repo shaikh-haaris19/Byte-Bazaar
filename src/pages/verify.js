@@ -26,7 +26,7 @@ const Verify = () => {
             });
 
             if (response.data.success) {
-                router.push('/order');
+                router.push('/order?id='+orderId);
             } else {
                 router.push('/checkout');
             }

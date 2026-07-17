@@ -3,7 +3,6 @@ import orderModel from "../../../Models/OrderModel";
 export default async function handler(req, res) {
 
   const { orderId, success } = req.body;
-  console.log(orderId, success)
 
   try {
 

@@ -149,7 +149,7 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                                             <div className='flex items-center gap-x-2.5'>
                                                 <AiFillMinusCircle onClick={() => removeFromCart(id, 1, cart[id].price, cart[id].name, cart[id].size, cart[id].color)} className='cursor-pointer' />
                                                 <span className='text-xl'>{cart[id].qty}</span>
-                                                <AiFillPlusCircle onClick={() => addToCart(id, 1, cart[id].price, cart[id].name, cart[id].size, card[id].color)} className='cursor-pointer' />
+                                                <AiFillPlusCircle onClick={() => addToCart(id, 1, cart[id].price, cart[id].name, cart[id].size, cart[id].color)} className='cursor-pointer' />
                                             </div>
                                         </div>
                                     </div>

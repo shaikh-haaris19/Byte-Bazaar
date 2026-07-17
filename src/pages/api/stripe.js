@@ -10,8 +10,14 @@ export default async function handler(req, res) {
   try {
     const { userId, items, amount, address } = req.body;
 
+    //Check If Cart Is Tempered -- Pending
+
+    //Check If Details Are Valid -- Pending
+
+
     const newOrder = await orderModel.create({
       userId,
+      orderId: Math.floor(Date.now() * Math.random()),
       items,
       amount,
       address,

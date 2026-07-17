@@ -18,6 +18,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     country: '',
     phone: '',
   })
+  const [disable, setDisable] = useState(true)
 
   const onChangeHandler = (e) => {
 
@@ -25,8 +26,14 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     const value = e.target.value
 
     setFormData(data => ({ ...data, [name]: value }))
-
   }
+
+  useEffect(() => {
+    const requiredFields = ['fullName', 'email', 'fullAddress', 'city', 'state', 'zipcode', 'phone'];
+    const isFormFilled = requiredFields.every(field => formData[field].trim() !== '');
+    setDisable(!isFormFilled);
+  }, [formData]);
+
 
   const initiatePayment = async () => {
     try {
@@ -47,7 +54,6 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
       };
 
       const responseStripe = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/stripe`, orderData);
-      console.log(responseStripe)
 
       if (responseStripe.data.success) {
         const { session_url } = responseStripe.data;
@@ -185,12 +191,13 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
               }
             </ol>
 
+            {
+              disable && <p className='text-red-500 text-sm -mb-4 -mr-4 flex flex-row-reverse'>Please Fill The Delivery Detail's !</p>
+            }
             <div className="flex items-center flex-col md:flex-row md:justify-end">
               <span className='text-center mt-5 mx-2 md:mx-6 font-semibold text-xl md:text-2xl underline'>Sub-Total : ₹{subTotal}</span>
-              <Link href={'/checkout'}>
-                <button onClick={initiatePayment} className="flex items-center gap-2 mx-2 mt-1 md:mt-5 text-white bg-green-600 border-0 py-2 px-6 md:px-10 focus:outline-none hover:bg-green-800 rounded text-sm md :text-xl w-full cursor-pointer transform transition-transform duration-100 hover:scale-110 prata-regular">Pay<FaShoppingBag />
-                </button>
-              </Link>
+              <button disabled={disable} onClick={initiatePayment} className="disabled:bg-green-200 flex items-center gap-2 mx-2 mt-1 md:mt-5 text-white bg-green-600 border-0 py-2 px-6 md:px-10 focus:outline-none hover:bg-green-800 rounded text-sm md :text-xl cursor-pointer transform transition-transform duration-100 hover:scale-110 prata-regular">Pay<FaShoppingBag />
+              </button>
             </div>
 
           </div>

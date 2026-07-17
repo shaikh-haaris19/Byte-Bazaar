@@ -135,7 +135,11 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                             {Object.keys(variants[color]).includes('L') && <option value={'L'}>L</option>}
                                             {Object.keys(variants[color]).includes('XL') && <option value={'XL'}>XL</option>}
                                             {Object.keys(variants[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
-
+                                            {Object.keys(variants[color]).includes('7 UK') && <option value={'7 UK'}>7 UK</option>}
+                                            {Object.keys(variants[color]).includes('8 UK') && <option value={'8 UK'}>8 UK</option>}
+                                            {Object.keys(variants[color]).includes('9 UK') && <option value={'9 UK'}>9 UK</option>}
+                                            {Object.keys(variants[color]).includes('10 UK') && <option value={'10 UK'}>XXL</option>}
+                                            {Object.keys(variants[color]).includes('11 UK') && <option value={'11 UK'}>XXL</option>}
 
                                         </select>
                                         <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
