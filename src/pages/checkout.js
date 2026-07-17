@@ -36,16 +36,11 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
         return;
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUserId`, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token })
-      });
-
-      const ParsedUserId = await response.json();
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/getUserId`, { token });
+      const userId = res.data.userId;
 
       let orderData = {
-        userId: ParsedUserId.userId,
+        userId,
         items: cart,
         amount: subTotal,
         address: formData
