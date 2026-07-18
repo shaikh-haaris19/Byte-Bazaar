@@ -140,7 +140,7 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                     {
                         Object.keys(cart).map(id => {
                             return (
-                                <li key={id} className='my-2 ml-4'>
+                                <li key={id} className='my-2'>
                                     <div className='flex text-left'>
                                         <div className='w-2/3'>
                                             <div>{cart[id].name} ({cart[id].color}/{cart[id].size})</div>

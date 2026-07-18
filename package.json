@@ -12,6 +12,7 @@
     "axios": "^1.18.1",
     "crypto-js": "^4.2.0",
     "jsonwebtoken": "^9.0.3",
+    "jwt-decode": "^4.0.0",
     "mongoose": "^9.7.4",
     "next": "16.2.9",
     "paytmchecksum": "^1.5.1",

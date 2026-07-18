@@ -138,8 +138,8 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                             {Object.keys(variants[color]).includes('7 UK') && <option value={'7 UK'}>7 UK</option>}
                                             {Object.keys(variants[color]).includes('8 UK') && <option value={'8 UK'}>8 UK</option>}
                                             {Object.keys(variants[color]).includes('9 UK') && <option value={'9 UK'}>9 UK</option>}
-                                            {Object.keys(variants[color]).includes('10 UK') && <option value={'10 UK'}>XXL</option>}
-                                            {Object.keys(variants[color]).includes('11 UK') && <option value={'11 UK'}>XXL</option>}
+                                            {Object.keys(variants[color]).includes('10 UK') && <option value={'10 UK'}>10 UK</option>}
+                                            {Object.keys(variants[color]).includes('11 UK') && <option value={'11 UK'}>11 UK</option>}
 
                                         </select>
                                         <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
@@ -158,7 +158,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
                                 <button onClick={() => BuyNow(product.slug, 1, product.price, product.title, product.size, product.color)} className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Buy Now</button>
 
-                                <button onClick={() => { toast.success('Product Added SuccessFully !'); addToCart(product.slug, 1, product.price, product.title, product.size, product.color) }} className="flex ml-3 text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
+                                <button onClick={() => { toast.success('Product Added SuccessFully !', { position: "top-left" }); addToCart(product.slug, 1, product.price, product.title, product.size, product.color) }} className="flex ml-3 text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
                             </div>
 
                             {/* Pincode Availability  */}

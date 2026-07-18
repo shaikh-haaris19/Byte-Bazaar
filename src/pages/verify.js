@@ -26,7 +26,7 @@ const Verify = () => {
             });
 
             if (response.data.success) {
-                router.push('/order?id='+orderId);
+                router.push('/order?id='+orderId+'&clearCart=true');
             } else {
                 router.push('/checkout');
             }

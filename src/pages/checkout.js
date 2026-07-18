@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { MdCancel } from "react-icons/md";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
-import { FaShoppingBag, FaTrashAlt } from "react-icons/fa";
-import Link from 'next/link';
+import { FaShoppingBag } from "react-icons/fa";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { jwtDecode } from 'jwt-decode';
 
 const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
   useEffect(() => {
-    console.log(cart)
+    let token = localStorage.getItem('token')
+
+    if (!token) {
+      return
+    }
   }, [])
 
   const [formData, setFormData] = useState({
@@ -100,12 +104,30 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message)
+        clearCart()
       } else {
         error
       }
 
     }
   }
+
+  //If User Is Logged In Then Use The User Email For CheckOut
+  const getUserEmail = () => {
+
+    let token = localStorage.getItem('token')
+    const decodeToken = jwtDecode(token);
+    let email = decodeToken.email
+    setFormData(prev => ({
+      ...prev,
+      email: email
+    }))
+
+  }
+
+  useEffect(() => {
+    getUserEmail()
+  }, [])
 
   return (
     <>
@@ -133,7 +155,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             <div className="w-1/2">
               <div className="mb-4">
                 <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-                <input onChange={onChangeHandler} name='email' value={formData.email} type="email" id="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input name='email' value={formData.email} type="email" id="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly />
               </div>
             </div>
 

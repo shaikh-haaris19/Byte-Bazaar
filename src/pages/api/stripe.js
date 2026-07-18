@@ -24,12 +24,21 @@ export default async function handler(req, res) {
 
       sumTotal += items[item].price * items[item].qty
       if (items[item].price !== product.price) {
-        return res.status(400).json({ success: false, message: "Cart tampered: price mismatch" })
+        return res.status(400).json({ success: false, message: "Something Went Wrong! Try Again" })
+      }
+
+      //Out Of Stock
+      if (product.availableQty < items[item].qty) {
+        return res.status(400).json({ success: false, message: `Product : '${item}' Is Out Of Stock !` })
       }
     }
 
+    if (sumTotal === 0) {
+      return res.status(400).json({ success: false, message: "No Product In The Cart" })
+    }
+
     if (sumTotal !== amount) {
-      return res.status(400).json({ success: false, message: "Cart tampered: totalAmt mismatch" })
+      return res.status(400).json({ success: false, message: "Something Went Wrong! Try Again" })
     }
 
     //Check If Details Are Valid -- Pending
