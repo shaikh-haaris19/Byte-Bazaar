@@ -28,17 +28,17 @@ const Order = ({ UserOrder }) => {
             </div>
 
             {
-              UserOrder.items.map(item => Object.keys(item).map(key => (
+              Object.keys(UserOrder.items).map(key => (
 
                 <div key={key} className="grid grid-cols-[2fr_1fr_1fr] border-t border-gray-200 py-2">
                   <div className="text-gray-500 text-sm">
-                    {item[key].name} ({item[key].color}/{item[key].size})
+                    {UserOrder['items'][key].name} ({UserOrder['items'][key].color}/{UserOrder['items'][key].size})
                   </div>
-                  <div className="text-gray-900 text-center">{item[key].qty}</div>
-                  <div className="text-gray-900 text-center">₹{item[key].price}</div>
+                  <div className="text-gray-900 text-center">{UserOrder['items'][key].qty}</div>
+                  <div className="text-gray-900 text-center">₹{UserOrder['items'][key].price}</div>
                 </div>
 
-              )))
+              ))
 
             }
             <p className='flex justify-end text-xl mr-10 mt-3 underline font-bold'>SubTotal : ₹{UserOrder.amount} </p>

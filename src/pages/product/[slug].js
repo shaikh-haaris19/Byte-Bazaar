@@ -18,7 +18,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
         let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
         let parsedPins = await pins.json();
 
-        if (parsedPins.includes(Number(pin))) {
+        if (Object.keys(parsedPins).includes(pin)) {
             setServiceability(true);
             toast.success('Yay ! PinCode Serviceable')
         } else {

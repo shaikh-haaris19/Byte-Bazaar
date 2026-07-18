@@ -8,6 +8,10 @@ import { toast } from 'react-toastify';
 
 const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
+  useEffect(() => {
+    console.log(cart)
+  }, [])
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -20,6 +24,34 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
   })
   const [disable, setDisable] = useState(true)
 
+  //Handles City & State Detection From Pincode
+  useEffect(() => {
+    if (formData.zipcode.length === 6) {
+      handleStateCity(formData.zipcode)
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        city: '',
+        state: ''
+      }))
+    }
+  }, [formData.zipcode])
+
+  const handleStateCity = async (zipcode) => {
+
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
+    let parsedPins = await pins.json();
+
+    if (zipcode in parsedPins) {
+      setFormData(prev => ({
+        ...prev,
+        city: parsedPins[zipcode][0],
+        state: parsedPins[zipcode][1]
+      }))
+    }
+
+  }
+
   const onChangeHandler = (e) => {
 
     const name = e.target.name
@@ -28,6 +60,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     setFormData(data => ({ ...data, [name]: value }))
   }
 
+  //Make SetDisable -> False When All The FormData Is Filled
   useEffect(() => {
     const requiredFields = ['fullName', 'email', 'fullAddress', 'city', 'state', 'zipcode', 'phone'];
     const isFormFilled = requiredFields.every(field => formData[field].trim() !== '');
@@ -61,9 +94,16 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
       } else {
         toast.error("Payment initiation failed");
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
-      toast.error("Something went wrong during payment");
+
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message)
+      } else {
+        error
+      }
+
     }
   }
 
@@ -118,6 +158,19 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
               </div>
             </div>
 
+            {/* PinCode  */}
+            <div className="w-1/2">
+              <div className="mb-4">
+                <label htmlFor="pinCode" className="leading-7 text-sm text-gray-600">PinCode</label>
+                <input onChange={onChangeHandler} name='zipcode' value={formData.zipcode} type="text" id="pinCode" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              </div>
+            </div>
+
+          </div>
+
+          {/* State & City  */}
+          <div className='flex gap-3 mx-auto'>
+
             {/* City  */}
             <div className="w-1/2">
               <div className="mb-4">
@@ -125,11 +178,6 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                 <input onChange={onChangeHandler} name='city' value={formData.city} type="text" id="city" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
               </div>
             </div>
-
-          </div>
-
-          {/* State & PinCode  */}
-          <div className='flex gap-3 mx-auto'>
 
             {/* State  */}
             <div className="w-1/2">
@@ -139,13 +187,6 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
               </div>
             </div>
 
-            {/* PinCode  */}
-            <div className="w-1/2">
-              <div className="mb-4">
-                <label htmlFor="pinCode" className="leading-7 text-sm text-gray-600">PinCode</label>
-                <input onChange={onChangeHandler} name='zipcode' value={formData.zipcode} type="text" id="pinCode" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
 
           </div>
         </div>
@@ -192,7 +233,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             </ol>
 
             {
-              disable && <p className='text-red-500 text-sm -mb-4 -mr-4 flex flex-row-reverse'>Please Fill The Delivery Detail's !</p>
+              disable && <p className='text-red-500 sm:flex-row justify-center md:justify-end text-sm -mb-4 -mr-4 flex flex-row-reverse'>Please Fill The Delivery Detail's !</p>
             }
             <div className="flex items-center flex-col md:flex-row md:justify-end">
               <span className='text-center mt-5 mx-2 md:mx-6 font-semibold text-xl md:text-2xl underline'>Sub-Total : ₹{subTotal}</span>

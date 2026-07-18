@@ -1,6 +1,7 @@
 // pages/api/stripe.js
 import Stripe from 'stripe';
 import orderModel from "../../../Models/OrderModel";
+import productModel from '../../../Models/ProductModel';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -11,6 +12,25 @@ export default async function handler(req, res) {
     const { userId, items, amount, address } = req.body;
 
     //Check If Cart Is Tempered -- Pending
+    let sumTotal = 0;
+    let product;
+    for (let item in items) {
+
+      product = await productModel.findOne({ slug: item })
+
+      if (!product) {
+        return res.status(400).json({ success: false, message: "Invalid product" });
+      }
+
+      sumTotal += items[item].price * items[item].qty
+      if (items[item].price !== product.price) {
+        return res.status(400).json({ success: false, message: "Cart tampered: price mismatch" })
+      }
+    }
+
+    if (sumTotal !== amount) {
+      return res.status(400).json({ success: false, message: "Cart tampered: totalAmt mismatch" })
+    }
 
     //Check If Details Are Valid -- Pending
 

@@ -49,11 +49,7 @@ const Orders = () => {
                             <div className="px-6 py-4 text-center">{product.paymentMethod}</div>
                             <div className="px-6 py-4 text-center">${product.amount}</div>
                             <div className="px-6 py-4 text-center">
-                                {new Date(product.createdAt).toLocaleDateString("en-US", {
-                                    year: "2-digit",
-                                    month: "numeric",
-                                    day: "numeric",
-                                })}
+                                {new Date(product.createdAt).toDateString("en-US")}
                             </div>
                             <div className="px-6 py-4 text-center">
                                 <Link className="text-blue-800 underline cursor-pointer" href={"/order?id=" + product._id}>
