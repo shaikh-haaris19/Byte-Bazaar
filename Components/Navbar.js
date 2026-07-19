@@ -73,22 +73,22 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                 }
 
                 {/* Profile Hover  */}
-                <div onClick={()=> handleDropDown()} onMouseEnter={()=> handleDropDown()}>
+                <div onClick={() => handleDropDown()} onMouseEnter={() => handleDropDown()}>
                     {user.value && <MdAccountCircle className='text-4xl cursor-pointer mr-2' />}
                     <div className='absolute top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
 
                         {
                             dropDown && <ul className='flex flex-col mx-3 my-4 gap-5'>
                                 <Link href={'/myaccount'}>
-                                    <li onClick={ handleDropDown } className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Account</li>
+                                    <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Account</li>
                                 </Link>
 
                                 <Link href={'/orders'}>
-                                    <li onClick={ handleDropDown } className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
+                                    <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
                                 </Link>
 
                                 <Link href={'/login'}>
-                                    <li onClick={()=> { LogOut() ; handleDropDown()}} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>LogOut</li>
+                                    <li onClick={() => { LogOut(); handleDropDown() }} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>LogOut</li>
                                 </Link>
 
                             </ul>
@@ -162,11 +162,11 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                 {/* Checkout & ClearCart  */}
                 <div className="flex justify-evenly">
                     <Link onClick={handleSideCart} href={'/checkout'} className='mr-3'>
-                        <button className="flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
+                        <button disabled={Object.keys(cart).length === 0} className=" disabled:bg-gray-400 disabled:hover:scale-100 flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
                         </button>
                     </Link>
 
-                    <button onClick={() => clearCart()} className="flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">ClearCart <FaTrashAlt /></button>
+                    <button disabled={Object.keys(cart).length === 0} onClick={() => clearCart()} className=" disabled:bg-gray-400 disabled:hover:scale-100 flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">ClearCart <FaTrashAlt /></button>
                 </div>
 
             </div>

@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   try {
     const { userId, items, amount, address } = req.body;
 
-    //Check If Cart Is Tempered -- Pending
+    //Check If Cart Is Tempered 
     let sumTotal = 0;
     let product;
     for (let item in items) {
@@ -33,15 +33,23 @@ export default async function handler(req, res) {
       }
     }
 
+    //No Product In Cart
     if (sumTotal === 0) {
       return res.status(400).json({ success: false, message: "No Product In The Cart" })
     }
 
+    //Product Amount Tempered
     if (sumTotal !== amount) {
       return res.status(400).json({ success: false, message: "Something Went Wrong! Try Again" })
     }
 
-    //Check If Details Are Valid -- Pending
+    //Check If Details Are Valid 
+    if (address.phone.length !== 10) {
+      return res.status(400).json({ success: false, message: "Please Enter 10 Digit Phone Number !" })
+    }
+    if (address.zipcode.length !== 6 || !Number.isInteger(Number(address.zipcode))) {
+      return res.status(400).json({ success: false, message: "Invalid Pincode !" })
+    }
 
 
     const newOrder = await orderModel.create({

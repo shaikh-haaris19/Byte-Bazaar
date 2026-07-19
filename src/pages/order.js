@@ -28,7 +28,7 @@ const Order = ({ UserOrder, clearCart }) => {
             <p className="leading-relaxed">Your Order Have Been Placed SuccessFully !</p>
             <p className="leading-relaxed text-sm"> <span className='font-semibold'>Payment Status</span> : {UserOrder.payment === true ? 'Paid' : 'Pending'}</p>
 
-            <p className="leading-relaxed text-sm mb-4"> <span className='font-semibold'>Order Status</span> : {UserOrder.status}</p>
+            <p className="leading-relaxed text-sm mb-4"> <span className='font-semibold'>Delivery Status</span> : {UserOrder.status}</p>
 
             <div className="grid grid-cols-[2fr_1fr_1fr] mb-4">
               <a className="py-2 text-center text-lg px-1">Items</a>

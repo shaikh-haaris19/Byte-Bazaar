@@ -104,9 +104,8 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message)
-        clearCart()
       } else {
-        error
+        console.log(error)
       }
 
     }
@@ -175,8 +174,8 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             {/* Phone  */}
             <div className="w-1/2">
               <div className="mb-4">
-                <label htmlFor="phone" className="leading-7 text-sm text-gray-600">Phone</label>
-                <input onChange={onChangeHandler} name='phone' value={formData.phone} type="phone" id="phone" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <label htmlFor="phone" className="leading-7 text-sm text-gray-600">Phone Number (10 Digit)</label>
+                <input onChange={onChangeHandler} name='phone' value={formData.phone} type="number" id="phone" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
               </div>
             </div>
 
@@ -184,7 +183,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             <div className="w-1/2">
               <div className="mb-4">
                 <label htmlFor="pinCode" className="leading-7 text-sm text-gray-600">PinCode</label>
-                <input onChange={onChangeHandler} name='zipcode' value={formData.zipcode} type="text" id="pinCode" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input onChange={onChangeHandler} name='zipcode' value={formData.zipcode} type="number" id="pinCode" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
               </div>
             </div>
 
