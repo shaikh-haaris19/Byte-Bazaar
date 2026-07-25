@@ -5,6 +5,17 @@ import productModel from '../../Models/ProductModel'
 
 const footwear = ({ allProducts }) => {
 
+    const colorClasses = {
+        White: "bg-white",
+        Black: "bg-black",
+        Blue: "bg-blue-700",
+        Green: "bg-green-700",
+        Brown: "bg-yellow-700",
+        Red: "bg-red-700",
+        Pink: "bg-pink-300",
+        Gray: "bg-gray-300"
+    };
+
     return (
         <div>
             <section className="text-gray-600 body-font">
@@ -36,22 +47,24 @@ const footwear = ({ allProducts }) => {
 
                                             {/* Sizes  */}
                                             <div className="mt-1 text-gray-600"> <span className='text-md'>Sizes:</span>
-                                                {allProducts[product].size.includes('7 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>7 UK</span>}
-                                                {allProducts[product].size.includes('8 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>8 UK</span>}
-                                                {allProducts[product].size.includes('9 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>9 UK</span>}
-                                                {allProducts[product].size.includes('10 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>10 UK</span>}
-                                                {allProducts[product].size.includes('11 UK') && <span className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>11 UK</span>}
+
+                                                {
+                                                    allProducts[product].size.map(sze => (
+                                                        <span key={sze} className='cursor-pointer text-sm mx-1 border px-2 py-1 rounded-xl text-black'>{sze}</span>
+                                                    ))
+                                                }
+
                                             </div>
 
                                             {/* Color  */}
                                             <div className="mt-1.5 text-gray-600 flex items-center justify-center"> <span className='text-md'>Colors:</span>
 
-                                                {allProducts[product].color.includes('Gray') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>}
-                                                {allProducts[product].color.includes('Camel') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-yellow-700 rounded-full w-6 h-6 focus:outline-none"></button>}
-                                                {allProducts[product].color.includes('Blue') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-blue-700 rounded-full w-6 h-6 focus:outline-none"></button>}
-                                                {allProducts[product].color.includes('Green') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-green-700 rounded-full w-6 h-6 focus:outline-none"></button>}
-                                                {allProducts[product].color.includes('Brown') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-yellow-700 rounded-full w-6 h-6 focus:outline-none"></button>}
-                                                {allProducts[product].color.includes('Red') && <button className="cursor-pointer border-2 border-gray-300 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+                                                {
+                                                    allProducts[product].color.map(clr => (
+                                                        <button className={`cursor-pointer border-2 border-gray-300 ml-1 
+                                                        ${colorClasses[clr]} rounded-full w-6 h-6 focus:outline-none`}></button>
+                                                    ))
+                                                }
 
                                             </div>
 
@@ -99,6 +112,9 @@ export async function getServerSideProps() {
             if (item.availableQty > 0) {
                 footwear[item.title].color = [item.color]
                 footwear[item.title].size = [item.size]
+            }else{
+                footwear[item.title].color = []
+                footwear[item.title].size = []
             }
         }
 

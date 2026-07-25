@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from "next/router";
@@ -10,168 +10,172 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
-    const ref = useRef()
     const [visible, setVisible] = useState(false)
     const router = useRouter()
     const [dropDown, setDropDown] = useState(false)
+    const [SideBar, setSideBar] = useState(false)
 
     const handleDropDown = () => {
         setDropDown(!dropDown)
     }
 
     const handleSideCart = () => {
-        if (ref.current.classList.contains('translate-x-full')) {
-            ref.current.classList.remove('translate-x-full')
-            ref.current.classList.add('translate-x')
-        }
-        else if (!ref.current.classList.contains('translate-x-full')) {
-            ref.current.classList.remove('translate-x')
-            ref.current.classList.add('translate-x-full')
-        }
+        setSideBar(!SideBar)
     }
 
+    let exempted = ['/checkout', '/order', '/orders', '/myaccount']
+    useEffect(() => {
+        Object.keys(cart).length !== 0 && setSideBar(true)
+
+        if (exempted.includes(router.pathname)) {
+            setSideBar(false)
+        }
+        setDropDown(false)
+
+    }, [router.pathname])
+
     return (
+        <>
+            {!SideBar && <div className='absolute z-30 top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
 
-        <div className='flex justify-between py-3 items-center lg:flex-row shadow sticky top-0 z-20 bg-white'>
-            <div className="logo mx-2">
+                {
+                    dropDown && <ul className='flex flex-col mx-3 my-4 gap-5'>
+                        <Link href={'/myaccount'}>
+                            <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Account</li>
+                        </Link>
 
-                {/* Logo  */}
-                <Link href={'/'} className='cursor-pointer'>
-                    <Image width={90} height={90} src={'/Logo.png'} alt='Logo'></Image>
-                </Link>
-            </div>
+                        <Link href={'/orders'}>
+                            <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
+                        </Link>
 
-            {/* Navigation's */}
-            <div className='nav hidden lg:block'>
-                <ul className='flex space-x-2 text-sm md:space-x-6 md:text-lg my-2 font-bold'>
-                    <Link href={'/topwear'} className='cursor-pointer hover:underline'><li className=''>TopWear</li></Link>
-                    <Link href={'/bottomwear'} className='cursor-pointer hover:underline'><li className=''>BottomWear</li></Link>
-                    <Link href={'/winterwear'} className='cursor-pointer hover:underline'><li className=''>WinterWear</li></Link>
-                    <Link href={'/footwear'} className='cursor-pointer hover:underline'><li className=''>FootWear</li></Link>
-                </ul>
-            </div>
+                        <Link href={'/login'}>
+                            <li onClick={() => { LogOut(); handleDropDown() }} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>LogOut</li>
+                        </Link>
 
-            {/* Cart iCon , HamBurger iCon & Profile Icon  */}
-            <div className='flex gap-2 mx-5 items-center'>
-
-
-                {/* Hamburger  */}
-                <div onClick={() => setVisible(true)} className='lg:hidden text-2xl cursor-pointer'>
-                    <GiHamburgerMenu />
-                </div>
-
-                {/* Cart Icon  */}
-                <div onClick={handleSideCart} className='mx-3'>
-                    <FiShoppingCart className='text-3xl cursor-pointer' />
-                </div>
-
-                {/* Profile Icon  */}
-                {!user.value &&
-                    <Link href={'/login'}>
-                        <button className="flex bg-amber-400 text-white hover:opacity-80 cursor-pointer py-2 lg:py-3/2 px-2 lg:px-4 focus:outline-none rounded text-xs sm:text-sm lg:text-lg">Login</button>
-                    </Link>
+                    </ul>
                 }
 
-                {/* Profile Hover  */}
-                <div onClick={() => handleDropDown()} onMouseEnter={() => handleDropDown()}>
-                    {user.value && <MdAccountCircle className='text-4xl cursor-pointer mr-2' />}
-                    <div className='absolute top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
+            </div>}
+            <div className={` ${!SideBar && 'overflow-hidden'} flex justify-between py-3 items-center lg:flex-row shadow sticky top-0 z-20 bg-white`}>
+                <div className="logo mx-2">
 
-                        {
-                            dropDown && <ul className='flex flex-col mx-3 my-4 gap-5'>
-                                <Link href={'/myaccount'}>
-                                    <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Account</li>
-                                </Link>
-
-                                <Link href={'/orders'}>
-                                    <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
-                                </Link>
-
-                                <Link href={'/login'}>
-                                    <li onClick={() => { LogOut(); handleDropDown() }} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>LogOut</li>
-                                </Link>
-
-                            </ul>
-                        }
-
-                    </div>
-
+                    {/* Logo  */}
+                    <Link href={'/'} className='cursor-pointer'>
+                        <Image width={90} height={90} src={'/Logo.png'} alt='Logo'></Image>
+                    </Link>
                 </div>
-            </div>
 
-            {/* Humburger Side Menu  */}
-            <div className={`z-30 h-screen absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
-                <div className='flex flex-col text-gray-600'>
-
-                    <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 cursor-pointer'>
-                        <FaArrowRight className='h-4 rotate-180' alt="" />
-                        <p>Back</p>
-                    </div>
-
-                    <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/' ? 'active' : ''}`} href='/'>Home</Link>
-                    <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/topwear' ? 'active' : ''}`} href='/topwear'>TopWear</Link>
-                    <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/bottomwear' ? 'active' : ''}`} href='/bottomwear'>BottomWear</Link>
-                    <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/winterwear' ? 'active' : ''}`} href='/winterwear'>WinterWear</Link>
-                    <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/footwear' ? 'active' : ''}`} href='/footwear'>FootWear</Link>
-
+                {/* Navigation's */}
+                <div className='nav hidden lg:block'>
+                    <ul className='flex space-x-2 text-sm md:space-x-6 md:text-lg my-2 font-bold'>
+                        <Link href={'/topwear'} className='cursor-pointer hover:underline'><li className=''>TopWear</li></Link>
+                        <Link href={'/bottomwear'} className='cursor-pointer hover:underline'><li className=''>BottomWear</li></Link>
+                        <Link href={'/winterwear'} className='cursor-pointer hover:underline'><li className=''>WinterWear</li></Link>
+                        <Link href={'/footwear'} className='cursor-pointer hover:underline'><li className=''>FootWear</li></Link>
+                    </ul>
                 </div>
-            </div>
+
+                {/* Cart iCon , HamBurger iCon & Profile Icon  */}
+                <div className='flex gap-2 mx-5 items-center'>
 
 
-            {/* Side Cart  */}
-            <div ref={ref} className="cart overflow-y-scroll absolute top-0 right-0  bg-[#E5B25D] py-10 px-8 text-blue-950 shadow-md transform transition-transform translate-x-full h-screen text-xl lg:text-lg prata-regular">
-
-                <h2 className='font-bold text-3xl relative -top-1.5 text-center'>Shopping Cart</h2>
-                <span onClick={handleSideCart} className='absolute right-3 top-2 text-2xl cursor-pointer'><MdCancel /></span>
-                <hr />
-
-                {/* Items  */}
-                <ol className='list-decimal my-10'>
-                    <div className='flex'>
-                        <h3 className='w-2/3 text-xl font-bold'>Items</h3>
-                        <h3 className='w-1/3 text-xl font-bold'>Quantity</h3>
+                    {/* Hamburger  */}
+                    <div onClick={() => setVisible(true)} className='lg:hidden text-2xl cursor-pointer'>
+                        <GiHamburgerMenu />
                     </div>
+
+                    {/* Cart Icon  */}
+                    <div onClick={handleSideCart} className='mx-3'>
+                        <FiShoppingCart className='text-3xl cursor-pointer' />
+                    </div>
+
+                    {/* Profile Icon  */}
+                    {!user.value &&
+                        <Link href={'/login'}>
+                            <button className="flex bg-amber-400 text-white hover:opacity-80 cursor-pointer py-2 lg:py-3/2 px-2 lg:px-4 focus:outline-none rounded text-xs sm:text-sm lg:text-lg">Login</button>
+                        </Link>
+                    }
+
+                    {/* Profile Hover  */}
+                    <div onClick={() => handleDropDown()}>
+                        {user.value && <MdAccountCircle className='text-4xl cursor-pointer mr-2' />}
+                    </div>
+                </div>
+
+                {/* Humburger Side Menu  */}
+                <div className={`z-30 h-screen absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
+                    <div className='flex flex-col text-gray-600'>
+
+                        <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 cursor-pointer'>
+                            <FaArrowRight className='h-4 rotate-180' alt="" />
+                            <p>Back</p>
+                        </div>
+
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/' ? 'active' : ''}`} href='/'>Home</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/topwear' ? 'active' : ''}`} href='/topwear'>TopWear</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/bottomwear' ? 'active' : ''}`} href='/bottomwear'>BottomWear</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/winterwear' ? 'active' : ''}`} href='/winterwear'>WinterWear</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/footwear' ? 'active' : ''}`} href='/footwear'>FootWear</Link>
+
+                    </div>
+                </div>
+
+
+                {/* Side Cart  */}
+                <div className={`cart overflow-y-scroll absolute top-0  bg-[#E5B25D] py-10 px-8 text-blue-950 shadow-md transition-all ${SideBar ? 'right-0' : '-right-125'} h-screen text-xl lg:text-lg prata-regular z-50`}>
+
+                    <h2 className='font-bold text-3xl relative -top-1.5 text-center'>Shopping Cart</h2>
+                    <span onClick={handleSideCart} className='absolute right-3 top-2 text-2xl cursor-pointer'><MdCancel /></span>
+                    <hr />
 
                     {/* Items  */}
-                    {
-                        Object.keys(cart).length === 0 && <div className='my-4 text-balance'>No Items To Display</div>
-                    }
+                    <ol className='list-decimal my-10'>
+                        <div className='flex'>
+                            <h3 className='w-2/3 text-xl font-bold'>Items</h3>
+                            <h3 className='w-1/3 text-xl font-bold'>Quantity</h3>
+                        </div>
 
-                    {
-                        Object.keys(cart).map(id => {
-                            return (
-                                <li key={id} className='my-2'>
-                                    <div className='flex text-left'>
-                                        <div className='w-2/3'>
-                                            <div>{cart[id].name} ({cart[id].color}/{cart[id].size})</div>
-                                        </div>
-                                        <div className='w-1/3 text-center text-xl'>
-                                            <div className='flex items-center gap-x-2.5'>
-                                                <AiFillMinusCircle onClick={() => removeFromCart(id, 1, cart[id].price, cart[id].name, cart[id].size, cart[id].color)} className='cursor-pointer' />
-                                                <span className='text-xl'>{cart[id].qty}</span>
-                                                <AiFillPlusCircle onClick={() => addToCart(id, 1, cart[id].price, cart[id].name, cart[id].size, cart[id].color)} className='cursor-pointer' />
+                        {/* Items  */}
+                        {
+                            Object.keys(cart).length === 0 && <div className='my-4 text-balance'>No Items To Display</div>
+                        }
+
+                        {
+                            Object.keys(cart).map(id => {
+                                return (
+                                    <li key={id} className='my-2'>
+                                        <div className='flex text-left'>
+                                            <div className='w-2/3'>
+                                                <div>{cart[id].name} ({cart[id].color}/{cart[id].size})</div>
+                                            </div>
+                                            <div className='w-1/3 text-center text-xl'>
+                                                <div className='flex items-center gap-x-2.5'>
+                                                    <AiFillMinusCircle onClick={() => removeFromCart(id, 1, cart[id].price, cart[id].name, cart[id].size, cart[id].color)} className='cursor-pointer' />
+                                                    <span className='text-xl'>{cart[id].qty}</span>
+                                                    <AiFillPlusCircle onClick={() => addToCart(id, 1, cart[id].price, cart[id].name, cart[id].size, cart[id].color)} className='cursor-pointer' />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            )
-                        })
-                    }
-                </ol>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ol>
 
-                {/* Checkout & ClearCart  */}
-                <div className="flex justify-evenly">
-                    <Link onClick={handleSideCart} href={'/checkout'} className='mr-3'>
-                        <button disabled={Object.keys(cart).length === 0} className=" disabled:bg-gray-400 disabled:hover:scale-100 flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
-                        </button>
-                    </Link>
+                    {/* Checkout & ClearCart  */}
+                    <div className="flex justify-evenly">
+                        <Link onClick={handleSideCart} href={'/checkout'} className='mr-3'>
+                            <button disabled={Object.keys(cart).length === 0} className=" disabled:bg-gray-400 disabled:hover:scale-100 flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded lg:text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">CheckOut <FaShoppingBag />
+                            </button>
+                        </Link>
 
-                    <button disabled={Object.keys(cart).length === 0} onClick={() => clearCart()} className=" disabled:bg-gray-400 disabled:hover:scale-100 flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">ClearCart <FaTrashAlt /></button>
+                        <button disabled={Object.keys(cart).length === 0} onClick={() => clearCart()} className=" disabled:bg-gray-400 disabled:hover:scale-100 flex items-center gap-3 mx-2 mt-5 text-white bg-yellow-800 border-0 py-2 px-3 focus:outline-none hover:bg-yellow-700 rounded text-md cursor-pointer transform transition-transform duration-100 hover:scale-110">ClearCart <FaTrashAlt /></button>
+                    </div>
+
                 </div>
 
             </div>
-
-        </div>
+        </>
 
     )
 }

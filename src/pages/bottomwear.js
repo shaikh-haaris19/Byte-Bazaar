@@ -100,6 +100,9 @@ export async function getServerSideProps() {
             if (item.availableQty > 0) {
                 bottomwear[item.title].color = [item.color]
                 bottomwear[item.title].size = [item.size]
+            }else{
+                bottomwear[item.title].color = []
+                bottomwear[item.title].size = []
             }
         }
 

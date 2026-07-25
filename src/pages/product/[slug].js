@@ -13,6 +13,13 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
     const [size, setSize] = useState(product.size)
     const [color, setColor] = useState(product.color)
 
+    useEffect(() => {
+
+        setSize(product.size)
+        setColor(product.color)
+
+    }, [router.query])
+
     const checkServiceability = async () => {
 
         let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
@@ -37,13 +44,15 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
         Blue: "bg-blue-700",
         Green: "bg-green-700",
         Brown: "bg-yellow-700",
-        Red: "bg-red-700"
+        Red: "bg-red-700",
+        Pink: "bg-pink-300",
+        Camel: "bg-yellow-600"
     };
 
     const refreshPage = (newSize, newColor) => {
 
         let url = `${process.env.NEXT_PUBLIC_HOST}/product/${variants[newColor][newSize]['slug']}`
-        window.location.href = url
+        router.push(url)
 
     }
 
@@ -59,7 +68,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">BYTE-BAZAAR</h2>
 
                             {/* Product Title  */}
-                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.slug} ({product.size}/{product.color})</h1>
+                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.title} ({product.size}/{product.color})</h1>
                             <div className="flex mb-4">
 
                                 {/* Review Star's  */}
@@ -130,16 +139,11 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                     <div className="relative">
                                         <select value={size} onChange={(e) => { refreshPage(e.target.value, color) }} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:border-yellow-500 text-base pl-3 pr-10">
 
-                                            {Object.keys(variants[color]).includes('S') && <option value={'S'}>S</option>}
-                                            {Object.keys(variants[color]).includes('M') && <option value={'M'}>M</option>}
-                                            {Object.keys(variants[color]).includes('L') && <option value={'L'}>L</option>}
-                                            {Object.keys(variants[color]).includes('XL') && <option value={'XL'}>XL</option>}
-                                            {Object.keys(variants[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
-                                            {Object.keys(variants[color]).includes('7 UK') && <option value={'7 UK'}>7 UK</option>}
-                                            {Object.keys(variants[color]).includes('8 UK') && <option value={'8 UK'}>8 UK</option>}
-                                            {Object.keys(variants[color]).includes('9 UK') && <option value={'9 UK'}>9 UK</option>}
-                                            {Object.keys(variants[color]).includes('10 UK') && <option value={'10 UK'}>10 UK</option>}
-                                            {Object.keys(variants[color]).includes('11 UK') && <option value={'11 UK'}>11 UK</option>}
+                                            {
+                                                Object.keys(variants[color]).map(clr => (
+                                                    <option value={clr}>{clr}</option>
+                                                ))
+                                            }
 
                                         </select>
                                         <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
