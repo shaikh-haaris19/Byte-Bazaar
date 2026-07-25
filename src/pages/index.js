@@ -14,7 +14,7 @@ export default function Home() {
 
 
       <div>
-        <img src="/Image.png" alt="" />
+        <img src="/Image.png" alt="" className="z-0" />
       </div>
 
       <section className="text-gray-600 body-font">

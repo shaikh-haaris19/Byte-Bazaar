@@ -23,7 +23,7 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
         setSideBar(!SideBar)
     }
 
-    let exempted = ['/checkout', '/order', '/orders', '/myaccount']
+    let exempted = ['/checkout', '/order', '/orders', '/myaccount', '/']
     useEffect(() => {
         Object.keys(cart).length !== 0 && setSideBar(true)
 
@@ -45,7 +45,7 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                         </Link>
 
                         <Link href={'/orders'}>
-                            <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>Orders</li>
+                            <li onClick={handleDropDown} className='hover:bg-gray-600 hover:text-white cursor-pointer py-2 px-2 border-r border-b'>My Orders</li>
                         </Link>
 
                         <Link href={'/login'}>
@@ -56,7 +56,7 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                 }
 
             </div>}
-            <div className={` ${!SideBar && 'overflow-hidden'} flex justify-between py-3 items-center lg:flex-row shadow sticky top-0 z-20 bg-white`}>
+            <div className={`${!SideBar && 'overflow-hidden'} flex justify-between py-3 items-center lg:flex-row shadow sticky top-0 z-20 bg-white`}>
                 <div className="logo mx-2">
 
                     {/* Logo  */}
@@ -111,18 +111,18 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
                             <p>Back</p>
                         </div>
 
-                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/' ? 'active' : ''}`} href='/'>Home</Link>
-                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/topwear' ? 'active' : ''}`} href='/topwear'>TopWear</Link>
-                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/bottomwear' ? 'active' : ''}`} href='/bottomwear'>BottomWear</Link>
-                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/winterwear' ? 'active' : ''}`} href='/winterwear'>WinterWear</Link>
-                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 border ${router.pathname === '/footwear' ? 'active' : ''}`} href='/footwear'>FootWear</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 text-black border ${router.pathname === '/' ? 'active' : ''}`} href='/'>Home</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 text-black border ${router.pathname === '/topwear' ? 'active' : ''}`} href='/topwear'>TopWear</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 text-black border ${router.pathname === '/bottomwear' ? 'active' : ''}`} href='/bottomwear'>BottomWear</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 text-black border ${router.pathname === '/winterwear' ? 'active' : ''}`} href='/winterwear'>WinterWear</Link>
+                        <Link onClick={() => setVisible(false)} className={`py-3 pl-6 text-black border ${router.pathname === '/footwear' ? 'active' : ''}`} href='/footwear'>FootWear</Link>
 
                     </div>
                 </div>
 
 
                 {/* Side Cart  */}
-                <div className={`cart overflow-y-scroll absolute top-0  bg-[#E5B25D] py-10 px-8 text-blue-950 shadow-md transition-all ${SideBar ? 'right-0' : '-right-125'} h-screen text-xl lg:text-lg prata-regular z-50`}>
+                <div className={`cart overflow-y-scroll absolute top-0  bg-[#E5B25D] py-10 pl-8 text-blue-950 shadow-md transition-all ${SideBar ? 'right-0' : '-right-125'} h-screen text-xl lg:text-lg prata-regular z-50`}>
 
                     <h2 className='font-bold text-3xl relative -top-1.5 text-center'>Shopping Cart</h2>
                     <span onClick={handleSideCart} className='absolute right-3 top-2 text-2xl cursor-pointer'><MdCancel /></span>

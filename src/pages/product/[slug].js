@@ -3,20 +3,22 @@ import React, { useEffect, useState } from 'react'
 import mongoose from 'mongoose'
 import productModel from '../../../Models/ProductModel'
 import { toast } from 'react-toastify'
+import ErrorPage from '../../../Components/ErrorPage'
 
-const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, variants, BuyNow }) => {
+const Slug = ({ addToCart, product, variants, BuyNow, error }) => {
 
     const router = useRouter()
-    const { slug } = router.query
     const [pin, setPin] = useState([]);
     const [serviceability, setServiceability] = useState(null);
-    const [size, setSize] = useState(product.size)
-    const [color, setColor] = useState(product.color)
+    const [size, setSize] = useState()
+    const [color, setColor] = useState()
 
     useEffect(() => {
 
-        setSize(product.size)
-        setColor(product.color)
+        if (!error) {
+            setSize(product.size)
+            setColor(product.color)
+        }
 
     }, [router.query])
 
@@ -53,7 +55,10 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
         let url = `${process.env.NEXT_PUBLIC_HOST}/product/${variants[newColor][newSize]['slug']}`
         router.push(url)
+    }
 
+    if (error === 404) {
+        return <ErrorPage statusCode={404} message="This Page Could Not Be Found!" />
     }
 
     return (
@@ -124,7 +129,7 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                     <div className="flex">
 
                                         {
-                                            Object.keys(variants).map(clr => (
+                                            size && Object.keys(variants).map(clr => (
                                                 Object.keys(variants[clr]).includes(size) &&
                                                 <button key={clr} onClick={() => refreshPage(size, clr)} className={`border-b-amber-100 cursor-pointer border-2 border-gray-300 ml-1 ${colorClasses[clr]} rounded-full w-6 h-6 focus:outline-none ${color === clr ? 'border-black' : 'border-gray-300'}`}></button>
                                             ))
@@ -140,8 +145,8 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
                                         <select value={size} onChange={(e) => { refreshPage(e.target.value, color) }} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:border-yellow-500 text-base pl-3 pr-10">
 
                                             {
-                                                Object.keys(variants[color]).map(clr => (
-                                                    <option value={clr}>{clr}</option>
+                                                color && Object.keys(variants[color]).map(sze => (
+                                                    <option key={sze} value={sze}>{sze}</option>
                                                 ))
                                             }
 
@@ -158,11 +163,13 @@ const Slug = ({ cart, addToCart, clearCart, removeFromCart, subTotal, product, v
 
                             {/* BuyNow & AddToCart Button   */}
                             <div className="flex">
-                                <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span>
+                                {
+                                    product.availableQty <= 0 ? <span className="title-font text-center font-medium text-xl lg:text-3xl xl:text-4xl text-gray-900">Out Of Stock!</span> : <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span>
+                                }
 
-                                <button onClick={() => BuyNow(product.slug, 1, product.price, product.title, product.size, product.color)} className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Buy Now</button>
+                                <button disabled={product.availableQty <= 0} onClick={() => BuyNow(product.slug, 1, product.price, product.title, product.size, product.color)} className="disabled:bg-yellow-200 flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 sm:px-3 focus:outline-none hover:bg-yellow-600 rounded">Buy Now</button>
 
-                                <button onClick={() => { toast.success('Product Added SuccessFully !', { position: "top-left" }); addToCart(product.slug, 1, product.price, product.title, product.size, product.color) }} className="flex ml-3 text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
+                                <button disabled={product.availableQty <= 0} onClick={() => { toast.success('Product Added SuccessFully !', { position: "top-left" }); addToCart(product.slug, 1, product.price, product.title, product.size, product.color) }} className="disabled:bg-yellow-200 flex ml-3 text-white bg-yellow-500 border-0 py-2 px-6 sm:px-3 focus:outline-none hover:bg-yellow-600 rounded">Add To Cart</button>
                             </div>
 
                             {/* Pincode Availability  */}
@@ -185,7 +192,14 @@ export async function getServerSideProps(context) {
         await mongoose.connect(process.env.MONGODB_URI)
     }
 
+    let error = null;
+
     let Product = await productModel.findOne({ slug: context.query.slug })
+
+    if (Product === null) {
+        return { props: { error: 404 } }
+    }
+
     let Variants = await productModel.find({ title: Product.title, category: Product.category })
 
     let colorSizeSlug = {}  // Example : { red : { XL : { slug :  'OverSized-Tshirt' } } }
