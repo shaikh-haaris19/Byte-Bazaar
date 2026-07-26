@@ -14,6 +14,8 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     if (!token) {
       return
     }
+
+    fetchUser()
   }, [])
 
   const [formData, setFormData] = useState({
@@ -23,10 +25,28 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     city: '',
     state: '',
     zipcode: '',
-    country: '',
     phone: '',
   })
   const [disable, setDisable] = useState(true)
+
+
+  //Fetch User Data Inital And Set Form Data To DB User Data
+  const fetchUser = async () => {
+
+    const token = localStorage.getItem('token');
+
+    const getUserId = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/getUserId`, { token });
+    const userData = getUserId.data.user;
+
+    setFormData(prev => ({
+      ...prev,
+      fullName: userData.name,
+      fullAddress: userData.address,
+      phone: userData.phone,
+      zipcode: userData.zipcode,
+    }))
+
+  }
 
   //Handles City & State Detection From Pincode
   useEffect(() => {
@@ -179,7 +199,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
             </div>
           </div>
 
-          {/* Phone & City  */}
+          {/* Phone & Pincode  */}
           <div className='flex gap-3 mx-auto'>
 
             {/* Phone  */}

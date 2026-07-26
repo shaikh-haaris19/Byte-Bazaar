@@ -23,7 +23,7 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
         setSideBar(!SideBar)
     }
 
-    let exempted = ['/checkout', '/order', '/orders', '/myaccount', '/']
+    let exempted = ['/checkout', '/order', '/orders', '/myaccount', '/', '/signUp', '/login', '/forgot']
     useEffect(() => {
         Object.keys(cart).length !== 0 && setSideBar(true)
 
@@ -36,7 +36,7 @@ const Navbar = ({ user, LogOut, cart, addToCart, clearCart, removeFromCart, subT
 
     return (
         <>
-            {!SideBar && <div className='absolute z-30 top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
+            {!SideBar && <div className='fixed z-30 top-13.5 right-5 w-50 sm:right-8 lg:top-13.5 sm:w-70 rounded bg-yellow-400'>
 
                 {
                     dropDown && <ul className='flex flex-col mx-3 my-4 gap-5'>

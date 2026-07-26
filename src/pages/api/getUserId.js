@@ -13,8 +13,8 @@ const handler = async (req, res) => {
         let email = decodeToken.email
         const user = await userModel.find({ email })
 
-        res.status(200).json({ userId: user[0]._id });
+        res.status(200).json({ userId: user[0]._id, user: user[0] });
     }
 }
 
-export default connectDB(handler);
+export default connectDB(handler); 
