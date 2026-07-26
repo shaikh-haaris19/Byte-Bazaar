@@ -102,7 +102,18 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     catch (error) {
       console.error(error);
 
-      if (error.response && error.response.data && error.response.data.message) {
+      if (error.response && error.response.data && error.response.data.message && error.response.data.clearCart) {
+        toast.error(error.response.data.message)
+
+        //Clear The Cart And Reset The Form
+        clearCart();
+        const requiredFields = ['fullName', 'email', 'fullAddress', 'city', 'state', 'zipcode', 'phone'];
+        requiredFields.forEach(field => {
+          formData[field] = "";
+        });
+
+      }
+      else if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message)
       } else {
         console.log(error)

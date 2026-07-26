@@ -44,7 +44,7 @@ const Order = ({ UserOrder, clearCart }) => {
                     {UserOrder['items'][key].name} ({UserOrder['items'][key].color}/{UserOrder['items'][key].size})
                   </div>
                   <div className="text-gray-900 text-center">{UserOrder['items'][key].qty}</div>
-                  <div className="text-gray-900 text-center">₹{UserOrder['items'][key].price}</div>
+                  <div className="text-gray-900 text-center">{UserOrder['items'][key].qty} x ₹{UserOrder['items'][key].price} = ₹{UserOrder['items'][key].price * UserOrder['items'][key].qty} </div>
                 </div>
 
               ))

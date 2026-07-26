@@ -2,6 +2,7 @@
 import Stripe from 'stripe';
 import orderModel from "../../../Models/OrderModel";
 import productModel from '../../../Models/ProductModel';
+import pinCodes from '../../../pincodes.json'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -10,6 +11,12 @@ export default async function handler(req, res) {
 
   try {
     const { userId, items, amount, address } = req.body;
+
+    //Check If Pincode Is Serviceable
+    if (!Object.keys(pinCodes).includes(address.zipcode)) {
+      return res.status(400).json({ success: false, message: "Sorry! Pincode Not Serviceable!" });
+    }
+
 
     //Check If Cart Is Tempered 
     let sumTotal = 0;
@@ -24,31 +31,31 @@ export default async function handler(req, res) {
 
       sumTotal += items[item].price * items[item].qty
       if (items[item].price !== product.price) {
-        return res.status(400).json({ success: false, message: "Something Went Wrong! Try Again" })
+        return res.status(400).json({ success: false, message: "Something Went Wrong! Try Again", clearCart: true })
       }
 
       //Out Of Stock
       if (product.availableQty < items[item].qty) {
-        return res.status(400).json({ success: false, message: `Product : '${item}' Is Out Of Stock !` })
+        return res.status(400).json({ success: false, message: `Product : '${item}' Is Out Of Stock !`, clearCart: false })
       }
     }
 
     //No Product In Cart
     if (sumTotal === 0) {
-      return res.status(400).json({ success: false, message: "No Product In The Cart" })
+      return res.status(400).json({ success: false, message: "No Product In The Cart", clearCart: false })
     }
 
     //Product Amount Tempered
     if (sumTotal !== amount) {
-      return res.status(400).json({ success: false, message: "Something Went Wrong! Try Again" })
+      return res.status(400).json({ success: false, message: "Something Went Wrong! Try Again", clearCart: true })
     }
 
     //Check If Details Are Valid 
     if (address.phone.length !== 10) {
-      return res.status(400).json({ success: false, message: "Please Enter 10 Digit Phone Number !" })
+      return res.status(400).json({ success: false, message: "Please Enter 10 Digit Phone Number !", clearCart: false })
     }
     if (address.zipcode.length !== 6 || !Number.isInteger(Number(address.zipcode))) {
-      return res.status(400).json({ success: false, message: "Invalid Pincode !" })
+      return res.status(400).json({ success: false, message: "Invalid Pincode !", clearCart: false })
     }
 
 

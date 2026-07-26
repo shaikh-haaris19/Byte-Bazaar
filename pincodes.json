@@ -1,0 +1,22 @@
+{
+    "400001": [
+        "Mumbai",
+        "Maharashtra"
+    ],
+    "500001": [
+        "Hyderabad",
+        "Telangana"
+    ],
+    "600001": [
+        "Chennai",
+        "Tamil Nadu"
+    ],
+    "700001": [
+        "Kolkata",
+        "West Bengal"
+    ],
+    "800001": [
+        "Patna",
+        "Bihar"
+    ]
+}
