@@ -5,18 +5,28 @@ import { FaShoppingBag } from "react-icons/fa";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
-  useEffect(() => {
-    let token = localStorage.getItem('token')
+  const router = useRouter()
 
-    if (!token) {
-      return
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token || token === "undefined" || token === "null") {
+      toast.error("Please login to checkout!", {
+        toastId: "checkout-login",
+      });
+      router.replace("/login");
+      return;
     }
 
-    fetchUser()
-  }, [])
+    fetchUser(token)
+    getUserEmail(token)
+  }, []);
+
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -31,9 +41,7 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
 
   //Fetch User Data Inital And Set Form Data To DB User Data
-  const fetchUser = async () => {
-
-    const token = localStorage.getItem('token');
+  const fetchUser = async (token) => {
 
     const getUserId = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/getUserId`, { token });
     const userData = getUserId.data.user;
@@ -143,9 +151,8 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
   }
 
   //If User Is Logged In Then Use The User Email For CheckOut
-  const getUserEmail = () => {
+  const getUserEmail = (token) => {
 
-    let token = localStorage.getItem('token')
     const decodeToken = jwtDecode(token);
     let email = decodeToken.email
     setFormData(prev => ({
@@ -155,12 +162,11 @@ const CheckOut = ({ cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
   }
 
-  useEffect(() => {
-    getUserEmail()
-  }, [])
-
   return (
     <>
+      <Head>
+        <title>CheckOut - ByteBazaar.com</title>
+      </Head>
 
       <div className='container m-auto'>
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -144,6 +145,9 @@ const myaccount = () => {
 
     return (
         <>
+            <Head>
+                <title>MyAccount - ByteBazaar.com</title>
+            </Head>
 
             {/* Account Details  */}
             <h1 className='text-3xl text-center font-bold pt-15'>Account Detail's</h1>

@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import Link from 'next/link'
 import React from 'react'
 import productModel from '../../Models/ProductModel'
+import Head from 'next/head'
 
 const winterwear = ({ allProducts }) => {
 
@@ -18,9 +19,18 @@ const winterwear = ({ allProducts }) => {
 
     return (
         <div>
-            <section className="text-gray-600 body-font">
+            <Head>
+                <title>WinterWear - ByteBazaar.com</title>
+            </Head>
+
+            <section className="text-gray-600 body-font min-h-screen">
                 <div className="container px-5 py-24 mx-auto">
                     <div className="flex flex-wrap -m-4 justify-center">
+
+                        {/* Product Out Of Stock  */}
+                        {
+                            Object.keys(allProducts).length === 0 && <p className='mx-auto py-5'>Sorry All WinterWear Product Are Out Of Stock. New Stock Coming Soon. Stay Tuned!</p>
+                        }
 
                         {
                             Object.keys(allProducts).map(product => {
@@ -112,7 +122,7 @@ export async function getServerSideProps() {
             if (item.availableQty > 0) {
                 winterwear[item.title].color = [item.color]
                 winterwear[item.title].size = [item.size]
-            }else{
+            } else {
                 winterwear[item.title].color = []
                 winterwear[item.title].size = []
             }

@@ -63,7 +63,7 @@ const Slug = ({ addToCart, product, variants, BuyNow, error }) => {
 
     return (
         <div>
-            <section className="text-gray-600 body-font overflow-hidden">
+            <section className="text-gray-600 body-font overflow-hidden min-h-screen">
                 <div className="container px-5 py-15 mx-auto">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
 
